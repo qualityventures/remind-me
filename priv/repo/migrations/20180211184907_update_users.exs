@@ -1,15 +1,17 @@
-defmodule RemindMe.Repo.Migrations.CreateUsers do
+defmodule RemindMe.Repo.Migrations.UpdateUsers do
   use Ecto.Migration
 
   def change do
-    create table(:users) do
+    alter table(:users) do
       add :email, :string
       add :password_hash, :string
       add :confirmed_at, :utc_datetime
       add :reset_sent_at, :utc_datetime
       add :sessions, {:map, :integer}, default: "{}"
-
-      timestamps()
+      
+      remove :username
+      remove :password
+      remove :app_name
     end
 
     create unique_index :users, [:email]
