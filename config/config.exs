@@ -17,6 +17,15 @@ config :remind_me, RemindMeWeb.Endpoint,
   pubsub: [name: RemindMe.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+# Phauxth authentication configuration
+config :phauxth,
+  token_salt: "Num9T9Fb",
+  endpoint: RemindMeWeb.Endpoint
+
+# Mailer configuration
+config :remind_me, RemindMe.Mailer,
+  adapter: Bamboo.LocalAdapter
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
