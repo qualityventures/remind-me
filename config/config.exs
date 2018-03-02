@@ -1,8 +1,3 @@
-# This file is responsible for configuring your application
-# and its dependencies with the aid of the Mix.Config module.
-#
-# This configuration file is loaded before any dependency and
-# is restricted to this project.
 use Mix.Config
 
 # General application configuration
@@ -22,9 +17,10 @@ config :phauxth,
   token_salt: "Num9T9Fb",
   endpoint: RemindMeWeb.Endpoint
 
-# Mailer configuration
+# Configures the Sendgrid mailer
 config :remind_me, RemindMe.Mailer,
-  adapter: Bamboo.LocalAdapter
+adapter: Bamboo.SendGridAdapter,
+api_key: System.get_env("SENDGRID_API_KEY")
 
 # Configures Elixir's Logger
 config :logger, :console,

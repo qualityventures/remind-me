@@ -20,7 +20,7 @@ defmodule RemindMe.Mixfile do
   def application do
     [
       mod: {RemindMe.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :bamboo]
     ]
   end
 
@@ -42,8 +42,10 @@ defmodule RemindMe.Mixfile do
       {:gettext, "~> 0.11"},
       {:phauxth, "~> 1.2"},
       {:bcrypt_elixir, "~> 1.0"},
-      {:bamboo, "~> 0.8"},
-      {:cowboy, "~> 1.0"}
+      {:bamboo, github: "thoughtbot/bamboo"},
+      {:cowboy, "~> 1.0"},
+      {:distillery, "~> 1.5"},
+      {:httpoison, "~> 0.13"}
     ]
   end
 

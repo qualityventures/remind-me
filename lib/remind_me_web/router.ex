@@ -11,9 +11,14 @@ defmodule RemindMeWeb.Router do
     plug Phauxth.Remember
   end
 
+  pipeline :api do
+    plug :accepts, ["json"]
+  end
+
   scope "/", RemindMeWeb do
     pipe_through :browser
 
+    # From Phauxth
     get "/", PageController, :index
     resources "/users", UserController
     resources "/sessions", SessionController, only: [:new, :create, :delete]
@@ -21,6 +26,14 @@ defmodule RemindMeWeb.Router do
     resources "/password_resets", PasswordResetController, only: [:new, :create]
     get "/password_resets/edit", PasswordResetController, :edit
     put "/password_resets/update", PasswordResetController, :update
+  end
+
+  scope "/api", RemindMeWeb do
+    pipe_through :api
+
+    post "/message-receive", MessageReceiveController, :process
+    post "/sendgrid-events", SendgridEventController, :process
+    post "/inbound-parse", InboundParseController, :process
   end
 
 end
