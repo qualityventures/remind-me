@@ -31,7 +31,7 @@ defmodule RemindMeWeb.Router do
   scope "/api", RemindMeWeb do
     pipe_through :api
 
-    post "/message-receive", MessageReceiveController, :process
+    get "/message-receive", MessageReceiveController, :process
     post "/sendgrid-events", SendgridEventController, :process
     post "/inbound-parse", InboundParseController, :process
   end
