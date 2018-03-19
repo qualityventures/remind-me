@@ -4,7 +4,7 @@ defmodule RemindMe.Mixfile do
   def project do
     [
       app: :remind_me,
-      version: "0.0.2",
+      version: "0.0.1",
       elixir: "~> 1.4",
       elixirc_paths: elixirc_paths(Mix.env),
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
@@ -20,7 +20,7 @@ defmodule RemindMe.Mixfile do
   def application do
     [
       mod: {RemindMe.Application, []},
-      extra_applications: [:logger, :runtime_tools, :bamboo]
+      extra_applications: [:logger, :runtime_tools, :bamboo, :elixir_make]
     ]
   end
 
