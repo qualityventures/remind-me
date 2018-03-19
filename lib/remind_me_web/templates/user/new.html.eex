@@ -37,6 +37,9 @@
     <%= error_tag f, :password %>
   </div>
 
+  <small class="form-text text-muted">Please note: We will never give or sell your information to anyone else. However, by signing up for this account, you agree to let us send you text messages and emails to promote products, services, and companies who may pay us to do so. <strong>We'll be careful to not over-do it and we'll try to only partner with products and services that we believe in</strong>, but if you are ever dissatisfied you can always cancel your account from your settings page (full disclosure: we don't have any partners lined up and this is a side project so you may not ever get any advertising).</small>
+  <br>  
+
   <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>
