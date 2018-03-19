@@ -5,7 +5,8 @@ defmodule RemindMeWeb.ConfirmController do
   alias RemindMe.Accounts
 
   def index(conn, params) do
-    case Phauxth.Confirm.verify(params, Accounts) do
+    # Set expiration for confirmation email to one week
+    case Phauxth.Confirm.verify(params, Accounts, max_age: 60 * 60 * 24 * 7) do
       {:ok, user} ->
         Accounts.confirm_user(user)
         message = "Your account has been confirmed"
