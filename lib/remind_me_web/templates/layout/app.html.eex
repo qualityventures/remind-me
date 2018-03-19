@@ -4,40 +4,64 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Text message initiated reminders">
+    <meta name="author" content="Damon Janis">
 
-    <title>Welcome to Phauxth - an extensible authentication library for Elixir web apps</title>
+    <title>Remind Me</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   </head>
 
   <body>
-    <div class="container">
-      <header class="header">
-        <nav role="navigation">
-          <ul class="nav nav-pills pull-right">
-            <li><a href="<%= page_path @conn, :index %>">Home</a></li>
-              <%= if @current_user do %>
-              <li><a href="<%= user_path @conn, :index %>">Users</a></li>
-              <li><a href="<%= user_path(@conn, :show, @current_user.id) %>"><%= @current_user.email %></a></li>
-              <li><%= link "Logout", to: session_path(@conn, :delete, @current_user), method: :delete %></li>
-              <% else %>
-              <li><a href="<%= user_path @conn, :new %>">New user</a></li>
-              <li><a href="<%= session_path @conn, :new %>">Login</a></li>
-              <% end %>
-          </ul>
-        </nav>
-        <span class="logo"></span>
-      </header>
+    <div class="main">
+      <div class="container" id="header">
+        <header>
+          <nav role="navigation">
+            <div class="header">
+              <a class="nav-link" href="<%= home_path(@conn, :index) %>">
+                <h2>Remind Me</h2>
+              </a>
+              <ul class="nav justify-content-end">
+                  <%= if @current_user do %>
+                    <li>
+                      <%= link "Settings", to: user_path(@conn, :edit, @current_user.id), class: "nav-link" %>
+                    </li>
+                    <li class="nav-item">
+                      <%= link "Logout", to: session_path(@conn, :delete, @current_user), method: :delete, class: "nav-link" %>
+                    </li>
+                  <% else %>
+                  <li class="nav-item">
+                      <a class="nav-link" href="<%= user_path @conn, :new %>">Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="<%= session_path @conn, :new %>">Login</a>
+                    </li>
+                  <% end %>
+              </ul>
+            </div>
+            <hr>
+          </nav>
+        </header>
+      </div>
+      <div class="container" id="body">
 
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+        <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+        <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 
-      <main role="main">
-        <%= render @view_module, @view_template, assigns %>
-      </main>
+        <main role="main">
+          <%= render @view_module, @view_template, assigns %>
+        </main>
 
-    </div> <!-- /container -->
-    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+      </div>
+    </div>
+    <footer>
+      <hr>
+      <p>Copyright © 2018 Damon Janis. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="<%= static_path(@conn, ~s{/js/app.js}) %>"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </body>
 </html>

@@ -1,1 +1,36 @@
-/* This file is for your main application css. */
+/* Phoenix flash messages */
+.alert:empty {
+    display: none;
+}
+
+#header {
+    max-width: 800px;
+}
+
+#body {
+    max-width: 700px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.main {
+    min-height: calc(100vh - 80px);
+}
+
+footer {
+    height: 40px;
+    font-size: .75em;
+    text-align: center;
+    margin-bottom: 10px;
+  }
