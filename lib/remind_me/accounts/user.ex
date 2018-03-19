@@ -23,7 +23,6 @@ defmodule RemindMe.Accounts.User do
     |> cast(attrs, [:first, :last, :email, :phone])
     |> validate_required([:first, :last, :email, :phone])
     |> unique_email
-    |> format_phone()
   end
 
   def create_changeset(%User{} = user, attrs) do
@@ -69,7 +68,7 @@ defmodule RemindMe.Accounts.User do
 
   defp strong_password?(_), do: {:error, "The password is too short"}
 
-  defp format_phone(%{changes: %{phone: phone}} = changeset) do
+  def format_phone(%{changes: %{phone: phone}} = changeset) do
     new_phone =
       Regex.replace(~r{\D}, phone, "")
       |> Accounts.convert_to_number_format()
