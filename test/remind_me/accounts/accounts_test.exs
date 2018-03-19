@@ -4,8 +4,8 @@ defmodule RemindMe.AccountsTest do
   alias RemindMe.Accounts
   alias RemindMe.Accounts.User
 
-  @create_attrs %{email: "fred@example.com", password: "reallyHard2gue$$"}
-  @update_attrs %{email: "frederick@example.com"}
+  @create_attrs %{email: "fred@remindme.live", password: "reallyHard2gue$$"}
+  @update_attrs %{email: "frederick@remindme.live"}
   @invalid_attrs %{email: "", password: ""}
 
   def fixture(:user, attrs \\ @create_attrs) do
@@ -25,7 +25,7 @@ defmodule RemindMe.AccountsTest do
 
   test "create_user/1 with valid data creates a user" do
     assert {:ok, %User{} = user} = Accounts.create_user(@create_attrs)
-    assert user.email == "fred@example.com"
+    assert user.email == "fred@remindme.live"
   end
 
   test "create_user/1 with invalid data returns error changeset" do
@@ -36,7 +36,7 @@ defmodule RemindMe.AccountsTest do
     user = fixture(:user)
     assert {:ok, user} = Accounts.update_user(user, @update_attrs)
     assert %User{} = user
-    assert user.email == "frederick@example.com"
+    assert user.email == "frederick@remindme.live"
   end
 
   test "update_user/2 with invalid data returns error changeset" do

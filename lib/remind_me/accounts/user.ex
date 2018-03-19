@@ -4,9 +4,12 @@ defmodule RemindMe.Accounts.User do
   alias RemindMe.Accounts.User
 
   schema "users" do
+    field :first, :string
+    field :last, :string
     field :email, :string
     field :password, :string, virtual: true
     field :password_hash, :string
+    field :phone, :string
     field :confirmed_at, :utc_datetime
     field :reset_sent_at, :utc_datetime
     field :sessions, {:map, :integer}, default: %{}
@@ -16,15 +19,15 @@ defmodule RemindMe.Accounts.User do
 
   def changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:email])
-    |> validate_required([:email])
+    |> cast(attrs, [:first, :last, :email, :phone])
+    |> validate_required([:first, :last, :email, :phone])
     |> unique_email
   end
 
   def create_changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:email, :password])
-    |> validate_required([:email, :password])
+    |> cast(attrs, [:first, :last, :email, :phone, :password])
+    |> validate_required([:first, :last, :email, :phone, :password])
     |> unique_email
     |> validate_password(:password)
     |> put_pass_hash

@@ -5,12 +5,12 @@ defmodule RemindMeWeb.ConfirmControllerTest do
 
   setup %{conn: conn} do
     conn = conn |> bypass_through(RemindMe.Router, :browser) |> get("/")
-    add_user("arthur@example.com")
+    add_user("arthur@remindme.live")
     {:ok, %{conn: conn}}
   end
 
   test "confirmation succeeds for correct key", %{conn: conn} do
-    conn = get(conn, confirm_path(conn, :index, key: gen_key("arthur@example.com")))
+    conn = get(conn, confirm_path(conn, :index, key: gen_key("arthur@remindme.live")))
     assert conn.private.phoenix_flash["info"] =~ "account has been confirmed"
     assert redirected_to(conn) == session_path(conn, :new)
   end
@@ -22,7 +22,7 @@ defmodule RemindMeWeb.ConfirmControllerTest do
   end
 
   test "confirmation fails for incorrect email", %{conn: conn} do
-    conn = get(conn, confirm_path(conn, :index, key: gen_key("gerald@example.com")))
+    conn = get(conn, confirm_path(conn, :index, key: gen_key("gerald@remindme.live")))
     assert conn.private.phoenix_flash["error"] =~ "Invalid credentials"
     assert redirected_to(conn) == session_path(conn, :new)
   end

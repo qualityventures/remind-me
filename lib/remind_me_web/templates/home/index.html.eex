@@ -1,0 +1,36 @@
+<div class="feature">
+    <h4>Send Text Message &nbsp;&nbsp;&nbsp;--->&nbsp;&nbsp;&nbsp; Get To-Do Email</h4>
+    <br>
+    <%= form_for @conn, user_path(@conn, :new), [method: "get"], fn _f -> %>
+        <button class="btn btn-primary" type="submit">Sign Up - No Fees Ever</button>
+    <% end %>
+    <br>
+</div>
+
+<h4>Embrace it.</h4>
+
+<p>
+Email is the most widely used task management tool, for better or for worse. If you're already using email consistently for work or personal use, checking it frequently and taking care of the tasks that come through, adding a separate task management system is a pain and takes incredible diligence and organization to manage. The result is usually frustration, forgotten tasks, and extra time and energy spent.
+</p>
+<br>
+
+<h4>Stop forgetting stuff.</h4>
+
+<p>
+The things that make it to the inbox get done. What slips through the cracks? The non-urgent stuff that crosses your mind every few days when you're busy, and makes you think "Oh yeah, I need to take care of that." By the time you're done with the task at hand, the thought is gone.
+</p>
+<br>
+
+<h4>Make it easy.</h4>
+
+<p>
+Shooting off a text to someone on your contact list takes zero effort. Shoot the text to your "Reminders" contact and you can turn your transient thought into a to-do email that will actually get done, at the speed of muscle-memory.
+</p>
+<br>
+
+<h4>Don't spend a fortune.</h4>
+
+<p>
+And don't waste your money on subscriptions or apps. Remind Me is free, and always will be. There are no paid upgrades: everything we develop is immediately available.
+</p>
+<br>

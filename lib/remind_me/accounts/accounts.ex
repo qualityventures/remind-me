@@ -17,6 +17,11 @@ defmodule RemindMe.Accounts do
     Repo.get_by(User, email: email)
   end
 
+  def get_by_phone(phone) do
+    phone = convert_to_number_format(phone)
+    Repo.get_by(User, phone: phone)
+  end
+
   def create_user(attrs) do
     %User{}
     |> User.create_changeset(attrs)
@@ -86,5 +91,12 @@ defmodule RemindMe.Accounts do
         )
         |> Repo.update())
     )
+  end
+
+  def convert_to_number_format(number) do
+    with stripped <- Regex.replace(~r{^1}, number, ""),
+         {area, remainder} <- String.split_at(stripped, 3),
+         {middle, last} <- String.split_at(remainder, 3),
+         do: area <> "-" <> middle <> "-" <> last
   end
 end

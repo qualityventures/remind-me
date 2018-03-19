@@ -38,8 +38,8 @@ defmodule RemindMe.Accounts.Message do
   """
   def confirm_request(address, key) do
     prep_mail(address)
-    |> subject("Confirm your account")
-    |> text_body("Confirm your email here http://www.example.com/confirm?key=#{key}")
+    |> subject("Remind Me - Confirm your account")
+    |> text_body("Please confirm your email here https://www.remindme.live/confirm?key=#{key}")
     |> Mailer.deliver_now()
   end
 
@@ -56,9 +56,9 @@ defmodule RemindMe.Accounts.Message do
   end
   def reset_request(address, key) do
     prep_mail(address)
-    |> subject("Reset your password")
+    |> subject("Remind Me - Reset your password")
     |> text_body(
-        "Reset your password at http://www.example.com/password_resets/edit?key=#{key}"
+        "Reset your password at https://www.remindme.live/password_resets/edit?key=#{key}"
       )
     |> Mailer.deliver_now()
   end
@@ -68,7 +68,7 @@ defmodule RemindMe.Accounts.Message do
   """
   def confirm_success(address) do
     prep_mail(address)
-    |> subject("Confirmed account")
+    |> subject("Remind Me - Confirmed account")
     |> text_body("Your account has been confirmed.")
     |> Mailer.deliver_now()
   end
@@ -78,7 +78,7 @@ defmodule RemindMe.Accounts.Message do
   """
   def reset_success(address) do
     prep_mail(address)
-    |> subject("Password reset")
+    |> subject("Remind Me - Password reset")
     |> text_body("Your password has been reset.")
     |> Mailer.deliver_now()
   end
@@ -86,6 +86,6 @@ defmodule RemindMe.Accounts.Message do
   defp prep_mail(address) do
     new_email()
     |> to(address)
-    |> from("admin@example.com")
+    |> from("noreply@remindme.live")
   end
 end

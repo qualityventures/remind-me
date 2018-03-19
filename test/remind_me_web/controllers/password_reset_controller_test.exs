@@ -4,34 +4,34 @@ defmodule RemindMeWeb.PasswordResetControllerTest do
   import RemindMeWeb.AuthCase
   alias RemindMe.Accounts
 
-  @update_attrs %{email: "gladys@example.com", password: "^hEsdg*F899"}
+  @update_attrs %{email: "gladys@remindme.live", password: "^hEsdg*F899"}
 
   setup %{conn: conn} do
     conn = conn |> bypass_through(RemindMeWeb.Router, :browser) |> get("/")
-    user = add_reset_user("gladys@example.com")
+    user = add_reset_user("gladys@remindme.live")
     {:ok, %{conn: conn, user: user}}
   end
 
   defp get_user do
-    Accounts.get_by(%{"email" => "gladys@example.com"})
+    Accounts.get_by(%{"email" => "gladys@remindme.live"})
   end
 
   test "user can create a password reset request", %{conn: conn} do
-    valid_attrs = %{email: "gladys@example.com"}
+    valid_attrs = %{email: "gladys@remindme.live"}
     conn = post(conn, password_reset_path(conn, :create), password_reset: valid_attrs)
     assert conn.private.phoenix_flash["info"] =~ "your inbox for instructions"
-    assert redirected_to(conn) == page_path(conn, :index)
+    assert redirected_to(conn) == home_path(conn, :index)
   end
 
   test "create function fails for no user", %{conn: conn} do
-    invalid_attrs = %{email: "prettylady@example.com"}
+    invalid_attrs = %{email: "prettylady@remindme.live"}
     conn = post(conn, password_reset_path(conn, :create), password_reset: invalid_attrs)
     assert conn.private.phoenix_flash["info"] =~ "your inbox for instructions"
-    assert redirected_to(conn) == page_path(conn, :index)
+    assert redirected_to(conn) == home_path(conn, :index)
   end
 
   test "reset password succeeds for correct key", %{conn: conn} do
-    valid_attrs = Map.put(@update_attrs, :key, gen_key("gladys@example.com"))
+    valid_attrs = Map.put(@update_attrs, :key, gen_key("gladys@remindme.live"))
     reset_conn = put(conn, password_reset_path(conn, :update), password_reset: valid_attrs)
     assert reset_conn.private.phoenix_flash["info"] =~ "password has been reset"
     assert redirected_to(reset_conn) == session_path(conn, :new)
@@ -40,7 +40,7 @@ defmodule RemindMeWeb.PasswordResetControllerTest do
   end
 
   test "reset password fails for incorrect key", %{conn: conn} do
-    invalid_attrs = %{email: "gladys@example.com", password: "^hEsdg*F899", key: "garbage"}
+    invalid_attrs = %{email: "gladys@remindme.live", password: "^hEsdg*F899", key: "garbage"}
     conn = put(conn, password_reset_path(conn, :update), password_reset: invalid_attrs)
     assert conn.private.phoenix_flash["error"] =~ "Invalid credentials"
   end
@@ -48,7 +48,7 @@ defmodule RemindMeWeb.PasswordResetControllerTest do
   test "sessions are deleted when user updates password", %{conn: conn, user: user} do
     add_phauxth_session(conn, user)
     assert get_user().sessions != %{}
-    valid_attrs = Map.put(@update_attrs, :key, gen_key("gladys@example.com"))
+    valid_attrs = Map.put(@update_attrs, :key, gen_key("gladys@remindme.live"))
     reset_conn = put(conn, password_reset_path(conn, :update), password_reset: valid_attrs)
     refute get_session(reset_conn, :phauxth_session_id)
     assert get_user().sessions == %{}

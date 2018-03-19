@@ -1,5 +1,3 @@
-<h2>Edit User</h2>
-
 <%= form_for @changeset, user_path(@conn, :update, @user), fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
@@ -8,8 +6,28 @@
   <% end %>
 
   <div class="form-group">
+    <%= label f, "First Name", class: "control-label" %>
+    <%= text_input f, :first, class: "form-control" %>
+    <%= error_tag f, :first %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, "Last Name", class: "control-label" %>
+    <%= text_input f, :last, class: "form-control" %>
+    <%= error_tag f, :last %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, "Mobile Phone", class: "control-label" %>
+    <%= text_input f, :phone, class: "form-control" %>
+    <small class="form-text text-muted">Format: 111-222-3333. The number you'll be  texting from.</small>
+    <%= error_tag f, :phone %>
+  </div>
+
+  <div class="form-group">
     <%= label f, :email, class: "control-label" %>
     <%= text_input f, :email, class: "form-control" %>
+    <small class="form-text text-muted">The email address you want the reminders to go to. Also your username for logging in.</small>
     <%= error_tag f, :email %>
   </div>
 
@@ -18,5 +36,10 @@
   </div>
 <% end %>
 
-<span><%= link "Update password", to: password_reset_path(@conn, :new) %></span><br>
-<span><%= link "Back", to: user_path(@conn, :index) %></span>
+<%= link "Delete Account", to: user_path(@conn, :delete, @user), method: "delete", class: "btn btn-danger", data: [confirm: "Are you sure?"] %>
+<br>
+<br>
+
+<span><%= link "Update password", to: password_reset_path(@conn, :new) %></span>
+<br>
+<span><%= link "Back", to: dashboard_path(@conn, :index) %></span>

@@ -6,7 +6,7 @@
 #
 
 users = [
-  # %{email: "jane.doe@example.com", password: "password"},
+  # %{email: "jane.doe@remindme.live", password: "password"},
   # %{email: "john.smith@example.org", password: "password"}
 ]
 

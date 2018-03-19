@@ -18,8 +18,8 @@ defmodule RemindMeWeb.Router do
   scope "/", RemindMeWeb do
     pipe_through :browser
 
-    # From Phauxth
-    get "/", PageController, :index
+    get "/", HomeController, :index
+    get "/dashboard", DashboardController, :index
     resources "/users", UserController
     resources "/sessions", SessionController, only: [:new, :create, :delete]
     get "/confirm", ConfirmController, :index

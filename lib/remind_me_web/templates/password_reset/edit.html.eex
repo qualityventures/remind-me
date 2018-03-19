@@ -1,4 +1,5 @@
-<h2>Reset Password</h2>
+<h4>Reset Password</h4>
+<br>
 
 <%= form_for @conn, password_reset_path(@conn, :update), [as: :password_reset, method: :put], fn f -> %>
   <%= if f.errors != [] do %>
@@ -20,4 +21,4 @@
   </div>
 <% end %>
 
-<span><%= link "Back", to: page_path(@conn, :index) %></span>
+<span><%= link "Back", to: dashboard_path(@conn, :index) %></span>

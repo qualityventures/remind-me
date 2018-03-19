@@ -4,23 +4,23 @@ defmodule RemindMeWeb.SessionControllerTest do
   import RemindMeWeb.AuthCase
   alias RemindMe.Accounts
 
-  @create_attrs %{email: "robin@example.com", password: "reallyHard2gue$$"}
-  @invalid_attrs %{email: "robin@example.com", password: "cannotGue$$it"}
-  @unconfirmed_attrs %{email: "lancelot@example.com", password: "reallyHard2gue$$"}
-  @rem_attrs %{email: "robin@example.com", password: "reallyHard2gue$$", remember_me: "true"}
+  @create_attrs %{email: "robin@remindme.live", password: "reallyHard2gue$$"}
+  @invalid_attrs %{email: "robin@remindme.live", password: "cannotGue$$it"}
+  @unconfirmed_attrs %{email: "lancelot@remindme.live", password: "reallyHard2gue$$"}
+  @rem_attrs %{email: "robin@remindme.live", password: "reallyHard2gue$$", remember_me: "true"}
   @no_rem_attrs Map.merge(@rem_attrs, %{remember_me: "false"})
 
   setup %{conn: conn} do
     conn = conn |> bypass_through(RemindMeWeb.Router, [:browser]) |> get("/")
-    add_user("lancelot@example.com")
-    user = add_user_confirmed("robin@example.com")
+    add_user("lancelot@remindme.live")
+    user = add_user_confirmed("robin@remindme.live")
     {:ok, %{conn: conn, user: user}}
   end
 
   test "rendering login form fails for user that is already logged in", %{conn: conn, user: user} do
     conn = conn |> add_phauxth_session(user) |> send_resp(:ok, "/")
     conn = get(conn, session_path(conn, :new))
-    assert redirected_to(conn) == page_path(conn, :index)
+    assert redirected_to(conn) == home_path(conn, :index)
   end
 
   test "login succeeds", %{conn: conn} do
@@ -36,7 +36,7 @@ defmodule RemindMeWeb.SessionControllerTest do
   test "login fails for user that is already logged in", %{conn: conn, user: user} do
     conn = conn |> add_phauxth_session(user) |> send_resp(:ok, "/")
     conn = post(conn, session_path(conn, :create), session: @create_attrs)
-    assert redirected_to(conn) == page_path(conn, :index)
+    assert redirected_to(conn) == home_path(conn, :index)
   end
 
   test "login fails for invalid password", %{conn: conn} do
@@ -47,7 +47,7 @@ defmodule RemindMeWeb.SessionControllerTest do
   test "logout succeeds and session is deleted", %{conn: conn, user: user} do
     conn = conn |> add_phauxth_session(user) |> send_resp(:ok, "/")
     conn = delete(conn, session_path(conn, :delete, user))
-    assert redirected_to(conn) == page_path(conn, :index)
+    assert redirected_to(conn) == home_path(conn, :index)
     conn = get(conn, user_path(conn, :index))
     assert redirected_to(conn) == session_path(conn, :new)
     assert Accounts.list_sessions(user.id) == %{}

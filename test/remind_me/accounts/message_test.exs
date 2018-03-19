@@ -6,26 +6,26 @@ defmodule RemindMe.Accounts.MessageTest do
   alias RemindMe.Accounts.Message
 
   setup do
-    email = "deirdre@example.com"
+    email = "deirdre@remindme.live"
     {:ok, %{email: email, key: gen_key(email)}}
   end
 
   test "sends confirmation request email", %{email: email, key: key} do
     sent_email = Message.confirm_request(email, key)
     assert sent_email.subject =~ "Confirm your account"
-    assert sent_email.text_body =~ "email here http://www.example.com/confirm?key="
+    assert sent_email.text_body =~ "email here https://www.remindme.live/confirm?key="
     assert_delivered_email(Message.confirm_request(email, key))
   end
 
   test "sends no user found message for password reset attempt" do
-    sent_email = Message.reset_request("gladys@example.com", nil)
+    sent_email = Message.reset_request("gladys@remindme.live", nil)
     assert sent_email.text_body =~ "but no user is associated with the email you provided"
   end
 
   test "sends reset password request email", %{email: email, key: key} do
     sent_email = Message.reset_request(email, key)
     assert sent_email.subject =~ "Reset your password"
-    assert sent_email.text_body =~ "password at http://www.example.com/password_resets/edit?key="
+    assert sent_email.text_body =~ "password at https://www.remindme.live/password_resets/edit?key="
     assert_delivered_email(Message.reset_request(email, key))
   end
 

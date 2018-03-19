@@ -1,5 +1,3 @@
-<h2>New User</h2>
-
 <%= form_for @changeset, user_path(@conn, :create), fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
@@ -8,8 +6,28 @@
   <% end %>
 
   <div class="form-group">
+    <%= label f, "First Name", class: "control-label" %>
+    <%= text_input f, :first, class: "form-control" %>
+    <%= error_tag f, :first %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, "Last Name", class: "control-label" %>
+    <%= text_input f, :last, class: "form-control" %>
+    <%= error_tag f, :last %>
+  </div>
+
+  <div class="form-group">
+      <%= label f, "Mobile Phone", class: "control-label" %>
+      <%= text_input f, :phone, class: "form-control" %>
+      <small class="form-text text-muted">Format: 111-222-3333. The number you'll be  texting from.</small>
+      <%= error_tag f, :phone %>
+    </div>
+
+  <div class="form-group">
     <%= label f, :email, class: "control-label" %>
     <%= text_input f, :email, class: "form-control" %>
+    <small class="form-text text-muted">The email address you want the reminders to go to. Also your username for logging in.</small>
     <%= error_tag f, :email %>
   </div>
 
@@ -23,5 +41,3 @@
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>
-
-<span><%= link "Back", to: user_path(@conn, :index) %></span>

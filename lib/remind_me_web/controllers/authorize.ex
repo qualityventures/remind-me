@@ -32,7 +32,7 @@ defmodule RemindMeWeb.Authorize do
   def guest_check(%Plug.Conn{assigns: %{current_user: nil}} = conn, _opts), do: conn
 
   def guest_check(%Plug.Conn{assigns: %{current_user: _current_user}} = conn, _opts) do
-    error(conn, "You need to log out to view this page", page_path(conn, :index))
+    error(conn, "", dashboard_path(conn, :index))
   end
 
   # Plug to only allow authenticated users with the correct id to access the resource.

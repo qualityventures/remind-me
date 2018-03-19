@@ -12,7 +12,7 @@ defmodule RemindMeWeb.PasswordResetController do
     key = Accounts.create_password_reset(RemindMeWeb.Endpoint, %{"email" => email})
     Accounts.Message.reset_request(email, key)
     message = "Check your inbox for instructions on how to reset your password"
-    success(conn, message, page_path(conn, :index))
+    success(conn, message, home_path(conn, :index))
   end
 
   def edit(conn, %{"key" => key}) do
