@@ -23,6 +23,7 @@ defmodule RemindMe.Accounts.User do
     |> cast(attrs, [:first, :last, :email, :phone])
     |> validate_required([:first, :last, :email, :phone])
     |> unique_email
+    |> format_phone()
   end
 
   def create_changeset(%User{} = user, attrs) do
