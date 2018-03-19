@@ -46,7 +46,7 @@ defmodule RemindMeWeb.Authorize do
         _opts
       ) do
     (id == to_string(current_user.id) and conn) ||
-      error(conn, "You are not authorized to view this page", user_path(conn, :index))
+      error(conn, "", dashboard_path(conn, :index))
   end
 
   def success(conn, message, path) do
