@@ -33,7 +33,7 @@ defmodule RemindMeWeb.Router do
 
     get "/message-receive", MessageReceiveController, :process
     post "/sendgrid-events", SendgridEventController, :process
-    post "/inbound-parse", InboundParseController, :process
+    post "/inbound-parse", InboundParseController, :new
   end
 
 end
