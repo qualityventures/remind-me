@@ -29,3 +29,6 @@ npm-debug.log
 # Ignore linter files
 /.formatter.exs
 /.elixir_ls/
+
+# Ignore helper
+helper.txt
