@@ -2,7 +2,7 @@ use Mix.Config
 
 config :remind_me, RemindMeWeb.Endpoint,
   http: [port: 80],
-  url: [host: "remindme.live"],
+  url: [host: "www.remindme.live"],
   cache_static_manifest: "priv/static/cache_manifest.json",
   server: true,
   root: ".",
