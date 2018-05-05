@@ -1,5 +1,4 @@
 defmodule RemindMeWeb.Authorize do
-
   import Plug.Conn
   import Phoenix.Controller
   import RemindMeWeb.Router.Helpers
@@ -32,7 +31,7 @@ defmodule RemindMeWeb.Authorize do
   def guest_check(%Plug.Conn{assigns: %{current_user: nil}} = conn, _opts), do: conn
 
   def guest_check(%Plug.Conn{assigns: %{current_user: _current_user}} = conn, _opts) do
-    error(conn, "", dashboard_path(conn, :index))
+    error(conn, "", home_path(conn, :dashboard))
   end
 
   # Plug to only allow authenticated users with the correct id to access the resource.
@@ -45,8 +44,7 @@ defmodule RemindMeWeb.Authorize do
         %Plug.Conn{params: %{"id" => id}, assigns: %{current_user: current_user}} = conn,
         _opts
       ) do
-    (id == to_string(current_user.id) and conn) ||
-      error(conn, "", dashboard_path(conn, :index))
+    (id == to_string(current_user.id) and conn) || error(conn, "", home_path(conn, :index))
   end
 
   def success(conn, message, path) do

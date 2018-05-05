@@ -5,8 +5,8 @@ defmodule RemindMeWeb.SessionController do
   alias RemindMe.Accounts
   alias Phauxth.Confirm.Login
 
-  plug :guest_check when action in [:new, :create]
-  plug :id_check when action in [:delete]
+  plug(:guest_check when action in [:new, :create])
+  plug(:id_check when action in [:delete])
 
   def new(conn, _) do
     render(conn, "new.html")
@@ -22,7 +22,7 @@ defmodule RemindMeWeb.SessionController do
 
         Login.add_session(conn, session_id, user.id)
         |> add_remember_me(user.id, params)
-        |> login_success(dashboard_path(conn, :index))
+        |> login_success(home_path(conn, :index))
 
       {:error, message} ->
         error(conn, message, session_path(conn, :new))

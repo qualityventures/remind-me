@@ -42,4 +42,4 @@
 
 <span><%= link "Update password", to: password_reset_path(@conn, :new) %></span>
 <br>
-<span><%= link "Back", to: dashboard_path(@conn, :index) %></span>
+<span><%= link "Back", to: home_path(@conn, :index) %></span>

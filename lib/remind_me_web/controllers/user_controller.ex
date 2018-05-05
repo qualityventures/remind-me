@@ -6,9 +6,9 @@ defmodule RemindMeWeb.UserController do
   alias RemindMe.Accounts
 
   # the following plugs are defined in the controllers/authorize.ex file
-  plug :user_check when action in [:index, :show]
-  plug :id_check when action in [:edit, :update, :delete]
-  plug :guest_check when action in [:new]
+  plug(:user_check when action in [:index, :show])
+  plug(:id_check when action in [:edit, :update, :delete])
+  plug(:guest_check when action in [:new])
 
   # def index(conn, _) do
   #   users = Accounts.list_users()
@@ -27,7 +27,12 @@ defmodule RemindMeWeb.UserController do
       {:ok, user} ->
         Log.info(%Log{user: user.id, message: "user created"})
         Accounts.Message.confirm_request(email, key)
-        success(conn, "Please click link in confirmation email, then log in below", session_path(conn, :new))
+
+        success(
+          conn,
+          "Please click link in confirmation email, then log in below",
+          session_path(conn, :new)
+        )
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -47,7 +52,7 @@ defmodule RemindMeWeb.UserController do
   def update(%Plug.Conn{assigns: %{current_user: user}} = conn, %{"user" => user_params}) do
     case Accounts.update_user(user, user_params) do
       {:ok, _user} ->
-        success(conn, "Settings updated successfully", dashboard_path(conn, :index))
+        success(conn, "Settings updated successfully", home_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", user: user, changeset: changeset)

@@ -21,4 +21,4 @@
   </div>
 <% end %>
 
-<span><%= link "Back", to: dashboard_path(@conn, :index) %></span>
+<span><%= link "Back", to: home_path(@conn, :index) %></span>
