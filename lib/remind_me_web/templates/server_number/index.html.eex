@@ -1,0 +1,26 @@
+<h2>Listing Server numbers</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Number</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for server_number <- @server_numbers do %>
+    <tr>
+      <td><%= server_number.number %></td>
+
+      <td class="text-right">
+        <span><%= link "Show", to: server_number_path(@conn, :show, server_number), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: server_number_path(@conn, :edit, server_number), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: server_number_path(@conn, :delete, server_number), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Server number", to: server_number_path(@conn, :new) %></span>

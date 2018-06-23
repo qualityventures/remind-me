@@ -1,0 +1,13 @@
+<h2>Show Client number</h2>
+
+<ul>
+
+  <li>
+    <strong>Number:</strong>
+    <%= @client_number.number %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: client_number_path(@conn, :edit, @client_number) %></span>
+<span><%= link "Back", to: client_number_path(@conn, :index) %></span>

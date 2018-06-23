@@ -24,6 +24,9 @@
               <ul class="nav justify-content-end">
                   <%= if @current_user do %>
                     <li>
+                      <%= link "Connections", to: connection_path(@conn, :index), class: "nav-link" %>
+                    </li>
+                    <li>
                       <%= link "Settings", to: user_path(@conn, :edit, @current_user.id), class: "nav-link" %>
                     </li>
                     <li class="nav-item">

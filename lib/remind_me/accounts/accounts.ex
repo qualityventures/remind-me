@@ -18,7 +18,7 @@ defmodule RemindMe.Accounts do
   end
 
   def get_by_phone(phone) do
-    phone = convert_to_number_format(phone)
+    phone = format_phone(phone)
     Repo.get_by(User, phone: phone)
   end
 
@@ -93,10 +93,12 @@ defmodule RemindMe.Accounts do
     )
   end
 
-  def convert_to_number_format(number) do
-    with stripped <- Regex.replace(~r{^1}, number, ""),
-         {area, remainder} <- String.split_at(stripped, 3),
-         {middle, last} <- String.split_at(remainder, 3),
-         do: area <> "-" <> middle <> "-" <> last
+  def format_phone(phone) do
+    trimmed = String.trim_leading(phone, "+1")
+    bare = Regex.replace(~r{\D}, trimmed, "")
+    {first, mid} = String.split_at(bare, 3)
+    {mid, last} = String.split_at(mid, 3)
+
+    "#{first}-#{mid}-#{last}"
   end
 end

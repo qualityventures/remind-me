@@ -1,0 +1,18 @@
+<h2>Show Destination</h2>
+
+<ul>
+
+  <li>
+    <strong>Type:</strong>
+    <%= @destination.type %>
+  </li>
+
+  <li>
+    <strong>Email:</strong>
+    <%= @destination.email %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: destination_path(@conn, :edit, @destination) %></span>
+<span><%= link "Back", to: destination_path(@conn, :index) %></span>

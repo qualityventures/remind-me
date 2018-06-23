@@ -1,0 +1,26 @@
+<h2>Listing Client numbers</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Number</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for client_number <- @client_numbers do %>
+    <tr>
+      <td><%= client_number.number %></td>
+
+      <td class="text-right">
+        <span><%= link "Show", to: client_number_path(@conn, :show, client_number), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: client_number_path(@conn, :edit, client_number), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: client_number_path(@conn, :delete, client_number), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Client number", to: client_number_path(@conn, :new) %></span>

@@ -20,14 +20,14 @@
   <div class="form-group">
     <%= label f, "Mobile Phone", class: "control-label" %>
     <%= text_input f, :phone, class: "form-control" %>
-    <small class="form-text text-muted">Format: 111-222-3333. The number you'll be  texting from.</small>
+    <small class="form-text text-muted">Format: 111-222-3333. The number we'll send updates and (occasional) ads to.</small>
     <%= error_tag f, :phone %>
   </div>
 
   <div class="form-group">
     <%= label f, :email, class: "control-label" %>
     <%= text_input f, :email, class: "form-control" %>
-    <small class="form-text text-muted">The email address you want the reminders to go to. Also your username for logging in.</small>
+    <small class="form-text text-muted">Your username for logging in. The email we'll send updates and (occasional) ads to.</small>
     <%= error_tag f, :email %>
   </div>
 

@@ -32,3 +32,6 @@ npm-debug.log
 
 # Ignore helper
 helper.txt
+
+# Ignore debug config
+.vscode

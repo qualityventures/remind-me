@@ -8,7 +8,6 @@
   <div class="form-group">
     <%= label f, :email, class: "control-label" %>
     <%= text_input f, :email, class: "form-control" %>
-    <small class="form-text text-muted">The email address your reminders go to.</small>
     <%= error_tag f, :email %>
   </div>
 

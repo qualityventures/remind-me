@@ -1,0 +1,5 @@
+<h2>Edit Connection</h2>
+
+<%= render "form.html", assigns %>
+
+<span><%= link "Back", to: connection_path(@conn, :index) %></span>

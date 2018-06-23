@@ -1,6 +1,8 @@
 defmodule RemindMeWeb.HomeController do
   use RemindMeWeb, :controller
 
+  alias RemindMe.Repo
+
   import RemindMeWeb.Authorize
 
   plug(:guest_check when action in [:index])
@@ -11,6 +13,8 @@ defmodule RemindMeWeb.HomeController do
   end
 
   def dashboard(conn, _params) do
-    render(conn, "dashboard.html")
+    user = conn.assigns.current_user |> Repo.preload(:connections)
+    connection = user.connections |> hd() |> Repo.preload([:server_number, :client_number])
+    render(conn, "dashboard.html", user: user, connection: connection)
   end
 end

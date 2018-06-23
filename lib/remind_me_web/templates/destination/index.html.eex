@@ -1,0 +1,28 @@
+<h2>Listing Destinations</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Email</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for destination <- @destinations do %>
+    <tr>
+      <td><%= destination.type %></td>
+      <td><%= destination.email %></td>
+
+      <td class="text-right">
+        <span><%= link "Show", to: destination_path(@conn, :show, destination), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: destination_path(@conn, :edit, destination), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: destination_path(@conn, :delete, destination), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Destination", to: destination_path(@conn, :new) %></span>

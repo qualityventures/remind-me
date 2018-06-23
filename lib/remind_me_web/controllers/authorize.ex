@@ -47,6 +47,24 @@ defmodule RemindMeWeb.Authorize do
     (id == to_string(current_user.id) and conn) || error(conn, "", home_path(conn, :index))
   end
 
+  def owner_check(%Plug.Conn{assigns: %{current_user: nil}} = conn, _opts) do
+    need_login(conn)
+  end
+
+  def owner_check(%Plug.Conn{assigns: %{current_user: current_user}} = conn, user) do
+    user == current_user || error(conn, "", home_path(conn, :index))
+  end
+
+  # Plug to only allow admins access to the resource
+  def admin_check(
+        %Plug.Conn{assigns: %{current_user: %{email: "damonvjanis@gmail.com"}}} = conn,
+        _opts
+      ) do
+    conn
+  end
+
+  def admin_check(conn, _opts), do: need_login(conn)
+
   def success(conn, message, path) do
     conn
     |> put_flash(:info, message)

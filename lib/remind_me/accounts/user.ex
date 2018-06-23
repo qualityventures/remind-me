@@ -1,19 +1,24 @@
 defmodule RemindMe.Accounts.User do
   use Ecto.Schema
+
   import Ecto.Changeset
+
   alias RemindMe.Accounts
   alias RemindMe.Accounts.User
 
   schema "users" do
-    field :first, :string
-    field :last, :string
-    field :email, :string
-    field :password, :string, virtual: true
-    field :password_hash, :string
-    field :phone, :string
-    field :confirmed_at, :utc_datetime
-    field :reset_sent_at, :utc_datetime
-    field :sessions, {:map, :integer}, default: %{}
+    field(:first, :string)
+    field(:last, :string)
+    field(:email, :string)
+    field(:password, :string, virtual: true)
+    field(:password_hash, :string)
+    field(:phone, :string)
+    field(:confirmed_at, :utc_datetime)
+    field(:reset_sent_at, :utc_datetime)
+    field(:sessions, {:map, :integer}, default: %{})
+
+    has_many(:connections, RemindMe.Connections.Connection)
+    has_many(:messages, RemindMe.Message)
 
     timestamps()
   end
@@ -55,8 +60,7 @@ defmodule RemindMe.Accounts.User do
   end
 
   # If you are using Argon2 or Pbkdf2, change Bcrypt to Argon2 or Pbkdf2
-  defp put_pass_hash(%Ecto.Changeset{valid?: true, changes:
-      %{password: password}} = changeset) do
+  defp put_pass_hash(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
     change(changeset, Comeonin.Bcrypt.add_hash(password))
   end
 
@@ -69,9 +73,7 @@ defmodule RemindMe.Accounts.User do
   defp strong_password?(_), do: {:error, "The password is too short"}
 
   def format_phone(%{changes: %{phone: phone}} = changeset) do
-    new_phone =
-      Regex.replace(~r{\D}, phone, "")
-      |> Accounts.convert_to_number_format()
+    new_phone = Accounts.format_phone(phone)
 
     change(changeset, %{phone: new_phone})
   end

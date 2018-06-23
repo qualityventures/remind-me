@@ -2,21 +2,24 @@ defmodule RemindMeWeb.UserController do
   use RemindMeWeb, :controller
 
   import RemindMeWeb.Authorize
+
   alias Phauxth.Log
+  alias RemindMe.Connections
   alias RemindMe.Accounts
 
-  # the following plugs are defined in the controllers/authorize.ex file
-  plug(:user_check when action in [:index, :show])
+  plug(:admin_check when action in [:index, :show])
+  plug(:guest_check when action in [:new, :create])
   plug(:id_check when action in [:edit, :update, :delete])
-  plug(:guest_check when action in [:new])
 
-  # def index(conn, _) do
-  #   users = Accounts.list_users()
-  #   render(conn, "index.html", users: users)
-  # end
+  def index(conn, _) do
+    users = Accounts.list_users()
+
+    render(conn, "index.html", users: users)
+  end
 
   def new(conn, _) do
     changeset = Accounts.change_user(%Accounts.User{})
+
     render(conn, "new.html", changeset: changeset)
   end
 
@@ -25,8 +28,17 @@ defmodule RemindMeWeb.UserController do
 
     case Accounts.create_user(user_params) do
       {:ok, user} ->
+        # Get available server number to create connection with
+        {:ok, server_number} = Connections.find_next_server_number(user)
+
         Log.info(%Log{user: user.id, message: "user created"})
         Accounts.Message.confirm_request(email, key)
+        Connections.create_connection(%{
+          "user_id" => user.id,
+          "server_number_id" => server_number.id,
+          "client_number" => %{"number" => user.phone},
+          "destination" => %{"email" => user.email, "type" => "email"}
+        })
 
         success(
           conn,
@@ -39,10 +51,10 @@ defmodule RemindMeWeb.UserController do
     end
   end
 
-  # def show(%Plug.Conn{assigns: %{current_user: user}} = conn, %{"id" => id}) do
-  #   user = (id == to_string(user.id) and user) || Accounts.get(id)
-  #   render(conn, "show.html", user: user)
-  # end
+  def show(%Plug.Conn{assigns: %{current_user: user}} = conn, %{"id" => id}) do
+    user = (id == to_string(user.id) and user) || Accounts.get(id)
+    render(conn, "show.html", user: user)
+  end
 
   def edit(%Plug.Conn{assigns: %{current_user: user}} = conn, _) do
     changeset = Accounts.change_user(user)

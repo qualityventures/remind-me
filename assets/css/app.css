@@ -28,9 +28,13 @@
     min-height: calc(100vh - 80px);
 }
 
+.help-block {
+    color: red;
+}
+
 footer {
     height: 40px;
     font-size: .75em;
     text-align: center;
     margin-bottom: 10px;
-  }
+}

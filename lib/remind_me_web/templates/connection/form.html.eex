@@ -1,0 +1,28 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= inputs_for f, :client_number, fn c -> %>
+    <div class="form-group">
+      <%= label c, :number, "Phone Number", class: "control-label" %>
+      <%= text_input c, :number, class: "form-control" %>
+      <%= unless @changeset.action do %>
+        <small class="form-text text-muted">Format: 111-222-3333. The number you (or someone else) will be texting <em>from</em>.</small>
+      <% end %>
+      <%= error_tag f, :client_number %>
+    </div>
+  <% end %>
+
+  <%= inputs_for f, :destination, fn d -> %>
+    <div class="form-group">
+      <%= label d, :email, "Email Address", class: "control-label" %>
+      <%= text_input d, :email, class: "form-control" %>
+      <small class="form-text text-muted">The email address that will receive the "To Do" email.</small>
+      <%= hidden_input d, :type, value: "email" %>
+    </div>
+  <% end %>
+
+  <%= hidden_input f, :server_number_id, value: @server_number.id %>
+  <%= hidden_input f, :user_id, value: @user.id %>
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>

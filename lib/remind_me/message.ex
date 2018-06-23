@@ -10,13 +10,15 @@ defmodule RemindMe.Message do
     field :message_sid, :string
     field :to, :string
 
+    belongs_to(:user, RemindMe.Accounts.User)
+
     timestamps()
   end
 
   @doc false
   def changeset(%Message{} = message, attrs) do
     message
-    |> cast(attrs, [:body, :from, :message_sid, :to])
-    |> validate_required([:body, :from, :message_sid, :to])
+    |> cast(attrs, [:body, :from, :message_sid, :to, :user_id])
+    |> validate_required([:body, :from, :message_sid, :to, :user_id])
   end
 end

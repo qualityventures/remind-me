@@ -18,8 +18,16 @@ defmodule RemindMeWeb.Router do
   scope "/", RemindMeWeb do
     pipe_through(:browser)
 
+    # Home page and dashboard
     get("/", HomeController, :index)
+    get("/dashboard", HomeController, :dashboard)
+
+    # Core CRUD operations
     resources("/users", UserController)
+    resources("/server_numbers", ServerNumberController)
+    resources("/connections", ConnectionController)
+    resources("/destinations", DestinationController)
+    resources("/client_numbers", ClientNumberController)
 
     # Authentication concerns
     resources("/sessions", SessionController, only: [:new, :create, :delete])

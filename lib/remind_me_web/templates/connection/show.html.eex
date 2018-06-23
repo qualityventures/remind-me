@@ -1,0 +1,18 @@
+<h2>Here are the details for this connection:</h2>
+<br>
+<h5>Create a contact in your phone</h5>
+<p>The phone number to text is <%= @connection.server_number.number %> (make sure you're texting from <%= @connection.client_number.number %>). Name it anything you want, but do something that's easy to remember like "Reminders for Myself" or "Bob."
+</p>
+<br>
+
+<h5>Send a text</h5>
+<p>You shouldn't get anything back from the number.</p>
+<br>
+
+<h5>Check your email</h5>
+<p>Look for an email at <%= @connection.destination.email %>. You should see a new email from "To Do" (todo@remindme.live). The subject will be the first 7 words in your text message, and the body of the email will have the whole message.</p>
+<br>
+
+<span><%= link "Edit", to: connection_path(@conn, :edit, @connection) %></span>
+<br>
+<span><%= link "Back", to: connection_path(@conn, :index) %></span>

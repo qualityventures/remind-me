@@ -20,7 +20,7 @@ defmodule RemindMeWeb.PasswordResetController do
   end
 
   def edit(conn, _params) do
-    render(conn, RemindMeWeb.ErrorView, "404.html")
+    render(conn, RemindMeWeb.ErrorView.render("404.html"))
   end
 
   def update(conn, %{"password_reset" => params}) do

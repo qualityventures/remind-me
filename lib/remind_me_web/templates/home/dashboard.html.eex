@@ -3,7 +3,7 @@
 <br>
 
 <h5>Create a contact in your phone</h5>
-<p>The phone number to text is 201-331-3515. Name it anything you want, but do something that's easy to remember like "Reminders for Myself."
+<p>The phone number to text is <%= @connection.server_number.number %> (make sure you're texting from <%= @connection.client_number.number %>). Name it anything you want, but do something that's easy to remember like "Reminders for Myself" or "Bob."
 </p>
 <br>
 
@@ -12,15 +12,24 @@
 <br>
 
 <h5>Check your email</h5>
-<p>You should see a new email from "To Do", todo@remindme.live. The subject will be the first 7 words in your text message, and the body of the email will have the whole message.</p>
+<p>You should see a new email from "To Do" (todo@remindme.live). The subject will be the first 7 words in your text message, and the body of the email will have the whole message.</p>
 <br>
 
 <h5>Try it with Siri or your preferred virtual assistant.</h5>
-<p>With Siri, you can say "Send a message to "Reminders for Myself" that says 'Research the difference between Turbo Tax and H&R Block' and you should see it in your email. Easy!</p>
+<p>With Siri, you can say "Send a message to 'Bob' that says 'Research the difference between Turbo Tax and H&R Block'" and you will see it in your email. Easy!</p>
+<br>
+
+<h5>Let someone else remind you</h5>
+<p><%= link "Click here", to: connection_path(@conn, :index) %> to set up a new connection: a phone number <em>different</em> than <%= @connection.server_number.number %> that can be texted by someone else (for example your spouse or significant other) and it will send a reminder email to <%= @user.email %> (or any another email address).</p>
+<br>
+
+<h5>Or send reminders somewhere else</h5>
+<p>A <%= link "Connection", to: connection_path(@conn, :index) %> isn't just for other people; you can use them to send text messages from your phone (<%= @user.phone %>) to a phone number <em>different</em> than <%= @connection.server_number.number %> that will push to an email address that you use for a different purpose, like work. You can set up any combination you want: your spouse can text a number and it sends a reminder to your work email, or you send a text and it pushes to your spouse's personal email.</p>
 <br>
 
 <h5>Coming soon</h5>
-<p>New features will come out periodically. The next one is that you will be able to add phone numbers in Settings besides your own that can text 201-331-3515 and have them push into your inbox. This lets your spouse or siginificant other send you to-do tasks via text, know that they'll be seen and taken care of, and not have to talk to you about it directly.</p>
+<p>New features will come out periodically. The next one is being able to set up recurring emails for things that come up periodically. For example, you could set a recurring email to come 7 days before a good friend's birthday, so that it's on your mind and in your inbox and you have a few days to actually do something meaningful for them. Or, you could set a recurring email every 3 months to buy a new air filter for your house. Or a recurring email on every Tuesday that reminds you to reserve a restaurant for Friday, helping you think about date night early enough in the week that you can impress your spouse. None of these examples come from our personal experiences, of course.</p>
+<p>If you have an idea for something you wish Remind Me could do, please send us an email! We'd love to hear from you.</p>
 <br>
 
 <h5>Contact us</h5>
