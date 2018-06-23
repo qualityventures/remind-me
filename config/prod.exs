@@ -10,7 +10,7 @@ config :remind_me, RemindMeWeb.Endpoint,
   version: Application.spec(:remind_me, :vsn)
 
   # Do not print debug messages in production
-config :logger, level: :info
+# config :logger, level: :info
 
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.
