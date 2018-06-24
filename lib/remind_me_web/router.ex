@@ -1,5 +1,7 @@
 defmodule RemindMeWeb.Router do
   use RemindMeWeb, :router
+  use Plug.ErrorHandler
+  use Sentry.Plug
 
   pipeline :browser do
     plug(:accepts, ["html"])
