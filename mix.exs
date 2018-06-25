@@ -46,7 +46,8 @@ defmodule RemindMe.Mixfile do
       {:cowboy, "~> 1.0"},
       {:distillery, "~> 1.5"},
       {:httpoison, "~> 0.13"},
-      {:sentry, "~> 6.2.1"}
+      {:sentry, "~> 6.2.1"},
+      {:hackney, "~> 1.13"}
     ]
   end
 
