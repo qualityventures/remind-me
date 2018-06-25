@@ -20,7 +20,7 @@ defmodule RemindMe.Mixfile do
   def application do
     [
       mod: {RemindMe.Application, []},
-      extra_applications: [:logger, :runtime_tools, :bamboo, :elixir_make, :sentry]
+      extra_applications: [:logger, :runtime_tools, :bamboo, :elixir_make, :sentry, :parse_trans]
     ]
   end
 
