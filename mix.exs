@@ -45,9 +45,9 @@ defmodule RemindMe.Mixfile do
       {:bamboo, github: "thoughtbot/bamboo"},
       {:cowboy, "~> 1.0"},
       {:distillery, "~> 1.5"},
-      {:httpoison, "~> 0.13"},
+      {:httpoison, "~> 1.2"},
       {:sentry, "~> 6.2.1"},
-      {:hackney, "~> 1.13"}
+      {:hackney, "~> 1.13", override: true}
     ]
   end
 
