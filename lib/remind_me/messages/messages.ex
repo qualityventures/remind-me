@@ -102,8 +102,8 @@ defmodule RemindMe.Messages do
     MessageConcat.changeset(message_concat, %{})
   end
 
-  def get_concat_by_ref(ref) do
-    query = from(m in MessageConcat, where: m.ref == ^ref, select: m)
+  def get_concat_by_ref(ref, to) do
+    query = from(m in MessageConcat, where: m.ref == ^ref and m.to == ^to, select: m)
     Repo.all(query)
   end
 end
