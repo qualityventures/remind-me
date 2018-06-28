@@ -31,7 +31,7 @@ defmodule RemindMeWeb.MessageReceiveController do
         messages
         |> Enum.sort_by(fn m -> m.part end)
         |> Enum.map(fn m -> m.body end)
-        |> Enum.join(" ")
+        |> Enum.join()
 
       for message <- messages do
         Messages.delete_message_concat(message)
