@@ -13,8 +13,6 @@ defmodule RemindMeWeb.MessageReceiveController do
     total = params["concat-total"]
     part = params["concat-part"]
 
-    IO.inspect params
-
     # Save partial message in database
     Messages.create_message_concat(%{
       body: body,
