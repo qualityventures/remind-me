@@ -1,7 +1,7 @@
 <h4>Reset Password</h4>
 <br>
 
-<%= form_for @conn, password_reset_path(@conn, :update), [as: :password_reset, method: :put], fn f -> %>
+<%= form_for @conn, Routes.password_reset_path(@conn, :update), [as: :password_reset, method: :put], fn f -> %>
   <%= if f.errors != [] do %>
     <div class="alert alert-danger">
       <p>Please check the errors below:</p>
@@ -21,4 +21,4 @@
   </div>
 <% end %>
 
-<span><%= link "Back", to: home_path(@conn, :index) %></span>
+<span><%= link "Back", to: Routes.home_path(@conn, :index) %></span>

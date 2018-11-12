@@ -22,10 +22,10 @@ defmodule RemindMeWeb.SessionController do
 
         Login.add_session(conn, session_id, user.id)
         |> add_remember_me(user.id, params)
-        |> login_success(home_path(conn, :index))
+        |> login_success(Routes.home_path(conn, :index))
 
       {:error, message} ->
-        error(conn, message, session_path(conn, :new))
+        error(conn, message, Routes.session_path(conn, :new))
     end
   end
 
@@ -35,7 +35,7 @@ defmodule RemindMeWeb.SessionController do
 
     delete_session(conn, :phauxth_session_id)
     |> Phauxth.Remember.delete_rem_cookie()
-    |> success("You have been logged out", home_path(conn, :index))
+    |> success("You have been logged out", Routes.home_path(conn, :index))
   end
 
   # This function adds a remember_me cookie to the conn.

@@ -24,7 +24,7 @@ defmodule RemindMeWeb.ConnectionController do
       {:ok, number} ->
         connection = %Connection{client_number: %ClientNumber{}, destination: %Destination{}}
         changeset = Connections.change_connection(connection)
-        action = connection_path(conn, :create)
+        action = Routes.connection_path(conn, :create)
         assigns = [server_number: number, user: user, changeset: changeset, action: action]
 
         render(conn, "new.html", assigns)
@@ -32,7 +32,7 @@ defmodule RemindMeWeb.ConnectionController do
       {:error, message} ->
         conn
         |> put_flash(:error, message)
-        |> redirect(to: connection_path(conn, :index))
+        |> redirect(to: Routes.connection_path(conn, :index))
     end
   end
 
@@ -43,12 +43,12 @@ defmodule RemindMeWeb.ConnectionController do
       {:ok, connection} ->
         conn
         |> put_flash(:info, "Connection created successfully.")
-        |> redirect(to: connection_path(conn, :show, connection))
+        |> redirect(to: Routes.connection_path(conn, :show, connection))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         user = conn.assigns.current_user
         {:ok, number} = Connections.find_next_server_number(user)
-        action = connection_path(conn, :create)
+        action = Routes.connection_path(conn, :create)
         assigns = [server_number: number, user: user, changeset: changeset, action: action]
 
         conn
@@ -63,7 +63,7 @@ defmodule RemindMeWeb.ConnectionController do
     if connection.user.id == conn.assigns.current_user.id do
       render(conn, "show.html", connection: connection)
     else
-      redirect(conn, to: connection_path(conn, :index))
+      redirect(conn, to: Routes.connection_path(conn, :index))
     end
   end
 
@@ -71,7 +71,7 @@ defmodule RemindMeWeb.ConnectionController do
     user = conn.assigns.current_user
     connection = Connections.get_connection_preloaded!(id)
     changeset = Connections.change_connection(connection)
-    action = connection_path(conn, :update, connection)
+    action = Routes.connection_path(conn, :update, connection)
 
     if connection.user.id == conn.assigns.current_user.id do
       assigns = [
@@ -84,7 +84,7 @@ defmodule RemindMeWeb.ConnectionController do
 
       render(conn, "edit.html", assigns)
     else
-      redirect(conn, to: connection_path(conn, :index))
+      redirect(conn, to: Routes.connection_path(conn, :index))
     end
   end
 
@@ -96,13 +96,13 @@ defmodule RemindMeWeb.ConnectionController do
         {:ok, connection} ->
           conn
           |> put_flash(:info, "Connection updated successfully.")
-          |> redirect(to: connection_path(conn, :show, connection))
+          |> redirect(to: Routes.connection_path(conn, :show, connection))
 
         {:error, %Ecto.Changeset{} = changeset} ->
           render(conn, "edit.html", connection: connection, changeset: changeset)
       end
     else
-      redirect(conn, to: connection_path(conn, :index))
+      redirect(conn, to: Routes.connection_path(conn, :index))
     end
   end
 
@@ -114,9 +114,9 @@ defmodule RemindMeWeb.ConnectionController do
 
       conn
       |> put_flash(:info, "Connection deleted successfully.")
-      |> redirect(to: connection_path(conn, :index))
+      |> redirect(to: Routes.connection_path(conn, :index))
     else
-      redirect(conn, to: connection_path(conn, :index))
+      redirect(conn, to: Routes.connection_path(conn, :index))
     end
   end
 end

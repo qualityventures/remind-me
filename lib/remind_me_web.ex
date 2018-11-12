@@ -21,7 +21,7 @@ defmodule RemindMeWeb do
     quote do
       use Phoenix.Controller, namespace: RemindMeWeb
       import Plug.Conn
-      import RemindMeWeb.Router.Helpers
+      alias RemindMeWeb.Router.Helpers, as: Routes
       import RemindMeWeb.Gettext
     end
   end
@@ -37,7 +37,7 @@ defmodule RemindMeWeb do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import RemindMeWeb.Router.Helpers
+      alias RemindMeWeb.Router.Helpers, as: Routes
       import RemindMeWeb.ErrorHelpers
       import RemindMeWeb.Gettext
     end

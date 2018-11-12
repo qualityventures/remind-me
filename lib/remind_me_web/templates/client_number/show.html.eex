@@ -9,5 +9,5 @@
 
 </ul>
 
-<span><%= link "Edit", to: client_number_path(@conn, :edit, @client_number) %></span>
-<span><%= link "Back", to: client_number_path(@conn, :index) %></span>
+<span><%= link "Edit", to: Routes.client_number_path(@conn, :edit, @client_number) %></span>
+<span><%= link "Back", to: Routes.client_number_path(@conn, :index) %></span>

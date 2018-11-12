@@ -1,7 +1,7 @@
 <div class="feature">
     <h4>Send Text Message &nbsp;&nbsp;&nbsp;--->&nbsp;&nbsp;&nbsp; Get To-Do Email</h4>
     <br>
-    <%= form_for @conn, user_path(@conn, :new), [method: "get"], fn _f -> %>
+    <%= form_for @conn, Routes.user_path(@conn, :new), [method: "get"], fn _f -> %>
         <button class="btn btn-primary" type="submit">Sign Up - No Fees Ever</button>
     <% end %>
     <br>

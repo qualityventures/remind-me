@@ -43,7 +43,7 @@ defmodule RemindMeWeb.UserController do
         success(
           conn,
           "Please click link in confirmation email, then log in below",
-          session_path(conn, :new)
+          Routes.session_path(conn, :new)
         )
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -64,7 +64,7 @@ defmodule RemindMeWeb.UserController do
   def update(%Plug.Conn{assigns: %{current_user: user}} = conn, %{"user" => user_params}) do
     case Accounts.update_user(user, user_params) do
       {:ok, _user} ->
-        success(conn, "Settings updated successfully", home_path(conn, :index))
+        success(conn, "Settings updated successfully", Routes.home_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", user: user, changeset: changeset)
@@ -75,6 +75,6 @@ defmodule RemindMeWeb.UserController do
     {:ok, _user} = Accounts.delete_user(user)
 
     delete_session(conn, :phauxth_session_id)
-    |> success("Account deleted successfully", session_path(conn, :new))
+    |> success("Account deleted successfully", Routes.session_path(conn, :new))
   end
 end

@@ -23,7 +23,7 @@ defmodule RemindMeWeb.ServerNumberController do
       {:ok, server_number} ->
         conn
         |> put_flash(:info, "Server number created successfully.")
-        |> redirect(to: server_number_path(conn, :show, server_number))
+        |> redirect(to: Routes.server_number_path(conn, :show, server_number))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -48,7 +48,7 @@ defmodule RemindMeWeb.ServerNumberController do
       {:ok, server_number} ->
         conn
         |> put_flash(:info, "Server number updated successfully.")
-        |> redirect(to: server_number_path(conn, :show, server_number))
+        |> redirect(to: Routes.server_number_path(conn, :show, server_number))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", server_number: server_number, changeset: changeset)
@@ -61,6 +61,6 @@ defmodule RemindMeWeb.ServerNumberController do
 
     conn
     |> put_flash(:info, "Server number deleted successfully.")
-    |> redirect(to: server_number_path(conn, :index))
+    |> redirect(to: Routes.server_number_path(conn, :index))
   end
 end

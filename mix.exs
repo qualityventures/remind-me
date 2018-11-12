@@ -5,7 +5,7 @@ defmodule RemindMe.Mixfile do
     [
       app: :remind_me,
       version: "1.0.8",
-      elixir: "~> 1.4",
+      elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env),
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
       start_permanent: Mix.env == :prod,
@@ -33,21 +33,23 @@ defmodule RemindMe.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.3.0"},
-      {:phoenix_pubsub, "~> 1.0"},
-      {:phoenix_ecto, "~> 3.2"},
+      {:phoenix, "~> 1.4.0"},
+      {:phoenix_pubsub, "~> 1.1"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_html, "~> 2.10"},
-      {:phoenix_live_reload, "~> 1.0", only: :dev},
+      {:phoenix_html, "~> 2.12"},
+      {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:gettext, "~> 0.11"},
       {:phauxth, "~> 1.2"},
       {:bcrypt_elixir, "~> 1.0"},
-      {:bamboo, github: "thoughtbot/bamboo"},
-      {:cowboy, "~> 1.0"},
-      {:distillery, "~> 1.5"},
-      {:httpoison, "~> 1.2"},
-      {:sentry, "~> 6.2.1"},
-      {:hackney, "~> 1.13", override: true}
+      {:bamboo, "~> 1.1"},
+      {:plug_cowboy, "~> 2.0"},
+      {:ecto_sql, "~> 3.0"},
+      {:phoenix_ecto, "~> 4.0"},
+      {:distillery, "~> 2.0"},
+      {:httpoison, "~> 1.4"},
+      {:sentry, "~> 7.0"},
+      {:hackney, "~> 1.14"},
+      {:jason, "~> 1.0"}
     ]
   end
 
@@ -61,7 +63,7 @@ defmodule RemindMe.Mixfile do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      "test": ["ecto.create --quiet", "ecto.migrate", "test"]
+      test: ["ecto.create --quiet", "ecto.migrate", "test"]
     ]
   end
 end

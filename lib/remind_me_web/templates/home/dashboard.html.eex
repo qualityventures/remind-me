@@ -20,11 +20,11 @@
 <br>
 
 <h5>Let someone else remind you</h5>
-<p><%= link "Click here", to: connection_path(@conn, :index) %> to set up a new connection: a phone number <em>different</em> than <%= @connection.server_number.number %> that can be texted by someone else (for example your spouse or significant other) and it will send a reminder email to <%= @user.email %> (or any another email address).</p>
+<p><%= link "Click here", to: Routes.connection_path(@conn, :index) %> to set up a new connection: a phone number <em>different</em> than <%= @connection.server_number.number %> that can be texted by someone else (for example your spouse or significant other) and it will send a reminder email to <%= @user.email %> (or any another email address).</p>
 <br>
 
 <h5>Or send reminders somewhere else</h5>
-<p>A <%= link "Connection", to: connection_path(@conn, :index) %> isn't just for other people; you can use them to send text messages from your phone (<%= @user.phone %>) to a phone number <em>different</em> than <%= @connection.server_number.number %> that will push to an email address that you use for a different purpose, like work. You can set up any combination you want: your spouse can text a number and it sends a reminder to your work email, or you send a text and it pushes to your spouse's personal email.</p>
+<p>A <%= link "Connection", to: Routes.connection_path(@conn, :index) %> isn't just for other people; you can use them to send text messages from your phone (<%= @user.phone %>) to a phone number <em>different</em> than <%= @connection.server_number.number %> that will push to an email address that you use for a different purpose, like work. You can set up any combination you want: your spouse can text a number and it sends a reminder to your work email, or you send a text and it pushes to your spouse's personal email.</p>
 <br>
 
 <h5>Coming soon</h5>

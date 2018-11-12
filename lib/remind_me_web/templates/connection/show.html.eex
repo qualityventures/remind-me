@@ -13,6 +13,6 @@
 <p>Look for an email at <%= @connection.destination.email %>. You should see a new email from "To Do" (todo@remindme.live). The subject will be the first 7 words in your text message, and the body of the email will have the whole message.</p>
 <br>
 
-<span><%= link "Edit", to: connection_path(@conn, :edit, @connection) %></span>
+<span><%= link "Edit", to: Routes.connection_path(@conn, :edit, @connection) %></span>
 <br>
-<span><%= link "Back", to: connection_path(@conn, :index) %></span>
+<span><%= link "Back", to: Routes.connection_path(@conn, :index) %></span>

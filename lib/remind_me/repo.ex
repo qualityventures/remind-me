@@ -1,5 +1,5 @@
 defmodule RemindMe.Repo do
-  use Ecto.Repo, otp_app: :remind_me
+  use Ecto.Repo, otp_app: :remind_me, adapter: Ecto.Adapters.Postgres
 
   @doc """
   Dynamically loads the repository url from the

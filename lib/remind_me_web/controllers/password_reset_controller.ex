@@ -12,7 +12,7 @@ defmodule RemindMeWeb.PasswordResetController do
     key = Accounts.create_password_reset(RemindMeWeb.Endpoint, %{"email" => email})
     Accounts.Message.reset_request(email, key)
     message = "Check your inbox for instructions on how to reset your password"
-    success(conn, message, home_path(conn, :index))
+    success(conn, message, Routes.home_path(conn, :index))
   end
 
   def edit(conn, %{"key" => key}) do
@@ -39,7 +39,7 @@ defmodule RemindMeWeb.PasswordResetController do
     message = "Your password has been reset"
 
     delete_session(conn, :phauxth_session_id)
-    |> success(message, session_path(conn, :new))
+    |> success(message, Routes.session_path(conn, :new))
   end
 
   defp update_password({:error, %Ecto.Changeset{} = changeset}, conn, params) do

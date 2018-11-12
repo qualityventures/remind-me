@@ -1,5 +1,5 @@
 <h2>Edit Server number</h2>
 
-<%= render "form.html", Map.put(assigns, :action, server_number_path(@conn, :update, @server_number)) %>
+<%= render "form.html", Map.put(assigns, :action, Routes.server_number_path(@conn, :update, @server_number)) %>
 
-<span><%= link "Back", to: server_number_path(@conn, :index) %></span>
+<span><%= link "Back", to: Routes.server_number_path(@conn, :index) %></span>

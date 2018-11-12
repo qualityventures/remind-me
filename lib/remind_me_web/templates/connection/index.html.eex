@@ -14,13 +14,13 @@
       <td><%= connection.client_number.number %></td>
       <td><%= connection.destination.email %></td>
       <td class="text-right">
-        <span><%= link "Details", to: connection_path(@conn, :show, connection), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Edit", to: connection_path(@conn, :edit, connection), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Delete", to: connection_path(@conn, :delete, connection), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+        <span><%= link "Details", to: Routes.connection_path(@conn, :show, connection), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: Routes.connection_path(@conn, :edit, connection), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: Routes.connection_path(@conn, :delete, connection), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
 
-<span><%= link "New Connection", to: connection_path(@conn, :new) %></span>
+<span><%= link "New Connection", to: Routes.connection_path(@conn, :new) %></span>

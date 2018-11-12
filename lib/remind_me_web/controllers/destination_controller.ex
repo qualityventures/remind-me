@@ -23,7 +23,7 @@ defmodule RemindMeWeb.DestinationController do
       {:ok, destination} ->
         conn
         |> put_flash(:info, "Destination created successfully.")
-        |> redirect(to: destination_path(conn, :show, destination))
+        |> redirect(to: Routes.destination_path(conn, :show, destination))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -48,7 +48,7 @@ defmodule RemindMeWeb.DestinationController do
       {:ok, destination} ->
         conn
         |> put_flash(:info, "Destination updated successfully.")
-        |> redirect(to: destination_path(conn, :show, destination))
+        |> redirect(to: Routes.destination_path(conn, :show, destination))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", destination: destination, changeset: changeset)
@@ -61,6 +61,6 @@ defmodule RemindMeWeb.DestinationController do
 
     conn
     |> put_flash(:info, "Destination deleted successfully.")
-    |> redirect(to: destination_path(conn, :index))
+    |> redirect(to: Routes.destination_path(conn, :index))
   end
 end

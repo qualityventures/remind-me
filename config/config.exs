@@ -4,6 +4,9 @@ use Mix.Config
 config :remind_me,
   ecto_repos: [RemindMe.Repo]
 
+# Use Jason for JSON parsing in Phoenix
+config :phoenix, :json_library, Jason
+
 # Configures the endpoint
 config :remind_me, RemindMeWeb.Endpoint,
   url: [host: "localhost"],

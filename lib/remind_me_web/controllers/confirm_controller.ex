@@ -11,10 +11,10 @@ defmodule RemindMeWeb.ConfirmController do
         Accounts.confirm_user(user)
         message = "Your account has been confirmed"
         Accounts.Message.confirm_success(user.email)
-        success(conn, message, session_path(conn, :new))
+        success(conn, message, Routes.session_path(conn, :new))
 
       {:error, message} ->
-        error(conn, message, session_path(conn, :new))
+        error(conn, message, Routes.session_path(conn, :new))
     end
   end
 end

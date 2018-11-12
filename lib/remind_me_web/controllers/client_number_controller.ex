@@ -23,7 +23,7 @@ defmodule RemindMeWeb.ClientNumberController do
       {:ok, client_number} ->
         conn
         |> put_flash(:info, "Client number created successfully.")
-        |> redirect(to: client_number_path(conn, :show, client_number))
+        |> redirect(to: Routes.client_number_path(conn, :show, client_number))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -48,7 +48,7 @@ defmodule RemindMeWeb.ClientNumberController do
       {:ok, client_number} ->
         conn
         |> put_flash(:info, "Client number updated successfully.")
-        |> redirect(to: client_number_path(conn, :show, client_number))
+        |> redirect(to: Routes.client_number_path(conn, :show, client_number))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", client_number: client_number, changeset: changeset)
@@ -61,6 +61,6 @@ defmodule RemindMeWeb.ClientNumberController do
 
     conn
     |> put_flash(:info, "Client number deleted successfully.")
-    |> redirect(to: client_number_path(conn, :index))
+    |> redirect(to: Routes.client_number_path(conn, :index))
   end
 end
