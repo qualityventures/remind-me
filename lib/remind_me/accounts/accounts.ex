@@ -29,12 +29,12 @@ defmodule RemindMe.Accounts do
   end
 
   def confirm_user(%User{} = user) do
-    change(user, %{confirmed_at: DateTime.utc_now()}) |> Repo.update()
+    change(user, %{confirmed_at: DateTime.utc_now() |> DateTime.truncate(:second)}) |> Repo.update()
   end
 
   def create_password_reset(endpoint, attrs) do
     with %User{} = user <- get_by(attrs) do
-      change(user, %{reset_sent_at: DateTime.utc_now}) |> Repo.update
+      change(user, %{reset_sent_at: DateTime.utc_now() |> DateTime.truncate(:second)}) |> Repo.update
       Log.info(%Log{user: user.id, message: "password reset requested"})
       Phauxth.Token.sign(endpoint, attrs)
     end

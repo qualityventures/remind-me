@@ -12,14 +12,14 @@ defmodule RemindMeWeb.AuthCase do
 
   def add_user_confirmed(email) do
     add_user(email)
-    |> change(%{confirmed_at: DateTime.utc_now()})
+    |> change(%{confirmed_at: DateTime.utc_now() |> DateTime.truncate(:second)})
     |> Repo.update!()
   end
 
   def add_reset_user(email) do
     add_user(email)
-    |> change(%{confirmed_at: DateTime.utc_now()})
-    |> change(%{reset_sent_at: DateTime.utc_now()})
+    |> change(%{confirmed_at: DateTime.utc_now() |> DateTime.truncate(:second)})
+    |> change(%{reset_sent_at: DateTime.utc_now() |> DateTime.truncate(:second)})
     |> Repo.update!()
   end
 
