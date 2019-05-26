@@ -60,7 +60,7 @@ defmodule RemindMeWeb.MessageReceiveController do
 
         # Send the email.
         subject
-        |> RemindMeWeb.Email.email_from_message(full_body, connection.destination.email)
+        |> RemindMe.Email.email_from_message(full_body, connection.destination.email)
         |> RemindMe.Mailer.deliver_now()
       end
     end
@@ -105,7 +105,7 @@ defmodule RemindMeWeb.MessageReceiveController do
 
         # Send the email.
         subject
-        |> RemindMeWeb.Email.email_from_message(body, connection.destination.email)
+        |> RemindMe.Email.email_from_message(body, connection.destination.email)
         |> RemindMe.Mailer.deliver_now()
 
         # Return 200 with no body

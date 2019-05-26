@@ -19,6 +19,7 @@ defmodule RemindMe.Accounts.User do
 
     has_many(:connections, RemindMe.Connections.Connection)
     has_many(:messages, RemindMe.Message)
+    has_many(:events, RemindMe.Events.Event)
 
     timestamps()
   end
