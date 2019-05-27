@@ -5,7 +5,7 @@ defmodule RemindMe.Chron.EventsPoll do
 
   def start_link() do
     case Mix.env() do
-      :test -> :ignore
+      :dev -> :ignore
       _ -> GenServer.start_link(__MODULE__, %{})
     end
   end
