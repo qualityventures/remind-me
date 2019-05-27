@@ -2,7 +2,12 @@ defmodule RemindMe.Events do
   import Ecto.Query, warn: false
 
   alias RemindMe.Repo
+  alias RemindMe.Email
+  alias RemindMe.Mailer
   alias RemindMe.Events.Event
+
+  @day 24 * 60 * 60
+  @week 7 * @day
 
   def next_event do
     from(e in Event, order_by: e.datetime, limit: 1)
@@ -14,18 +19,90 @@ defmodule RemindMe.Events do
   def process_event(%Event{} = event) do
     now = DateTime.utc_now()
 
-    if DateTime.compare(event.datetime, now) == :lt do
-      event = Repo.preload(event, :user)
-
-      subject = event.body |> String.split() |> Enum.take(7) |> Enum.join(" ")
-
-      subject
-      |> RemindMe.Email.email_from_message(event.body, event.user.email)
-      |> RemindMe.Mailer.deliver_now()
+    with true <- DateTime.compare(event.datetime, now) == :lt,
+         event = Repo.preload(event, :user),
+         subject = build_subject(event.body) do
+      # Send email and create next event without regard to success,
+      # in case something fails so the process doesn't block up
+      Agent.start(fn -> send_email(subject, event.body, event.user.email) end)
+      Agent.start(fn -> create_next_event(event) end)
 
       delete_event(event)
+
+      # Call function recursively to immediately process next event, in case
+      # more than one event is due for processing
+      process_event(next_event())
     end
   end
+
+  def build_subject(body) do
+    body
+    |> String.split()
+    |> Enum.take(7)
+    |> Enum.join(" ")
+  end
+
+  def send_email(subject, body, email) do
+    subject
+    |> Email.email_from_message(body, email)
+    |> Mailer.deliver_now()
+  end
+
+  def create_next_event(%{recurring: nil}), do: nil
+
+  def create_next_event(%{recurring: "daily"} = event) do
+    next = DateTime.add(event.datetime, 1 * @day)
+
+    %{Map.from_struct(event) | datetime: next}
+    |> create_event()
+  end
+
+  def create_next_event(%{recurring: "weekly"} = event) do
+    next = DateTime.add(event.datetime, 1 * @week)
+
+    %{Map.from_struct(event) | datetime: next}
+    |> create_event()
+  end
+
+  def create_next_event(%{recurring: "monthly"} = event) do
+    next = add_months(event.datetime, 1)
+
+    %{Map.from_struct(event) | datetime: next}
+    |> create_event()
+  end
+
+  def create_next_event(%{recurring: "quarterly"} = event) do
+    next = add_months(event.datetime, 3)
+
+    %{Map.from_struct(event) | datetime: next}
+    |> create_event()
+  end
+
+  def create_next_event(%{recurring: "yearly"} = event) do
+    next = add_months(event.datetime, 12)
+
+    %{Map.from_struct(event) | datetime: next}
+    |> create_event()
+  end
+
+  def add_months(%DateTime{} = datetime, num) do
+    date = DateTime.to_date(datetime)
+    time = DateTime.to_time(datetime)
+
+    new_year = date.year + div(date.month + num - 1, 12)
+    new_month = get_month(date.month + num)
+    new_day = get_day(date.day, Date.new(new_year, new_month, 1))
+    {:ok, new_date} = Date.new(new_year, new_month, new_day)
+
+    {:ok, naive} = NaiveDateTime.new(new_date, time)
+    DateTime.from_naive!(naive, "Etc/UTC")
+  end
+
+  def get_month(total_months) when rem(total_months, 12) == 0, do: 12
+  def get_month(total_months), do: rem(total_months, 12)
+
+  def get_day(day, {:ok, _first_of_month}) when day <= 28, do: day
+  def get_day(day, {:ok, first_of_month}), do: min(day, Date.days_in_month(first_of_month))
 
   def list_events do
     Repo.all(Event)
