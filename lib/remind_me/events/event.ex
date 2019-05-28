@@ -30,7 +30,7 @@ defmodule RemindMe.Events.Event do
 
     case DateTime.compare(value, DateTime.utc_now()) do
       :gt -> changeset
-      _ -> add_error(changeset, :datetime, "Date must be in the future")
+      _ -> add_error(changeset, :datetime, "date must be in the future")
     end
   end
 end

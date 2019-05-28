@@ -32,6 +32,13 @@
   </div>
 
   <div class="form-group">
+    <%= label f, :timezone, class: "control-label" %>
+    <%= select f, :timezone, Enum.filter(Tzdata.zone_list, &String.contains?(&1, "US")), class: "form-control" %>
+    <small class="form-text text-muted">Your timezone for future reminders</small>
+    <%= error_tag f, :timezone %>
+  </div>
+
+  <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>

@@ -49,7 +49,8 @@ defmodule RemindMe.Mixfile do
       {:httpoison, "~> 1.4"},
       {:sentry, "~> 7.0"},
       {:hackney, "~> 1.14"},
-      {:jason, "~> 1.0"}
+      {:jason, "~> 1.0"},
+      {:tzdata, "~> 1.0.0"}
     ]
   end
 

@@ -16,6 +16,7 @@ defmodule RemindMe.Accounts.User do
     field(:confirmed_at, :utc_datetime)
     field(:reset_sent_at, :utc_datetime)
     field(:sessions, {:map, :integer}, default: %{})
+    field(:timezone, :string, default: "US/Eastern")
 
     has_many(:connections, RemindMe.Connections.Connection)
     has_many(:messages, RemindMe.Message)
@@ -26,7 +27,7 @@ defmodule RemindMe.Accounts.User do
 
   def changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:first, :last, :email, :phone])
+    |> cast(attrs, [:first, :last, :email, :phone, :timezone])
     |> validate_required([:first, :last, :email, :phone])
     |> unique_email
   end

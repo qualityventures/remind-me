@@ -8,6 +8,9 @@ defmodule RemindMe.Events do
 
   @day 24 * 60 * 60
   @week 7 * @day
+  @frequencies ["Daily", "Weekly", "Monthly", "Quarterly", "Yearly"]
+
+  def frequencies, do: @frequencies
 
   def next_event do
     from(e in Event, order_by: e.datetime, limit: 1)
@@ -50,35 +53,35 @@ defmodule RemindMe.Events do
 
   def create_next_event(%{recurring: nil}), do: nil
 
-  def create_next_event(%{recurring: "daily"} = event) do
+  def create_next_event(%{recurring: "Daily"} = event) do
     next = DateTime.add(event.datetime, 1 * @day)
 
     %{Map.from_struct(event) | datetime: next}
     |> create_event()
   end
 
-  def create_next_event(%{recurring: "weekly"} = event) do
+  def create_next_event(%{recurring: "Weekly"} = event) do
     next = DateTime.add(event.datetime, 1 * @week)
 
     %{Map.from_struct(event) | datetime: next}
     |> create_event()
   end
 
-  def create_next_event(%{recurring: "monthly"} = event) do
+  def create_next_event(%{recurring: "Monthly"} = event) do
     next = add_months(event.datetime, 1)
 
     %{Map.from_struct(event) | datetime: next}
     |> create_event()
   end
 
-  def create_next_event(%{recurring: "quarterly"} = event) do
+  def create_next_event(%{recurring: "Quarterly"} = event) do
     next = add_months(event.datetime, 3)
 
     %{Map.from_struct(event) | datetime: next}
     |> create_event()
   end
 
-  def create_next_event(%{recurring: "yearly"} = event) do
+  def create_next_event(%{recurring: "Yearly"} = event) do
     next = add_months(event.datetime, 12)
 
     %{Map.from_struct(event) | datetime: next}
@@ -103,6 +106,11 @@ defmodule RemindMe.Events do
 
   def get_day(day, {:ok, _first_of_month}) when day <= 28, do: day
   def get_day(day, {:ok, first_of_month}), do: min(day, Date.days_in_month(first_of_month))
+
+  def list_events_by_user(user) do
+    from(e in Event, where: e.user_id == ^user.id, select: e)
+    |> Repo.all()
+  end
 
   def list_events do
     Repo.all(Event)

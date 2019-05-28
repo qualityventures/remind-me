@@ -27,6 +27,9 @@
                       <%= link "Connections", to: Routes.connection_path(@conn, :index), class: "nav-link" %>
                     </li>
                     <li>
+                      <%= link "Future Reminders", to: Routes.event_path(@conn, :index), class: "nav-link" %>
+                    </li>
+                    <li>
                       <%= link "Settings", to: Routes.user_path(@conn, :edit, @current_user.id), class: "nav-link" %>
                     </li>
                     <li class="nav-item">
@@ -59,7 +62,7 @@
     </div>
     <footer>
       <hr>
-      <p>Copyright © 2018 Damon Janis. All Rights Reserved.</p>
+      <p>Copyright © 2019 Damon Janis. All Rights Reserved.</p>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

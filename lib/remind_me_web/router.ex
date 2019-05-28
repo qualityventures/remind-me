@@ -30,6 +30,7 @@ defmodule RemindMeWeb.Router do
     resources("/connections", ConnectionController)
     resources("/destinations", DestinationController)
     resources("/client_numbers", ClientNumberController)
+    resources("/events", EventController, except: [:show])
 
     # Authentication concerns
     resources("/sessions", SessionController, only: [:new, :create, :delete])

@@ -1,0 +1,27 @@
+<h2>Future Reminders</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Frequency</th>
+      <th>Message</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for event <- @events do %>
+    <tr>
+      <td><%= format_date(event.datetime) %></td>
+      <td><%= event.recurring || "Just this Once" %></td>
+      <td><%= event.body %></td>
+      <td class="text-right">
+        <span><%= link "Edit", to: Routes.event_path(@conn, :edit, event), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: Routes.event_path(@conn, :delete, event), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Event", to: Routes.event_path(@conn, :new) %></span>

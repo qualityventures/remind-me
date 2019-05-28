@@ -1,0 +1,57 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <%= datetime_select f, :datetime, builder: fn b -> %>
+    <div class="form-group">
+      <label class="control-label">Date</label>
+      <div class="form-row">
+        <div class="col">
+          <%= b.(:month, [selected: today(@conn.assigns.current_user.timezone).month, class: "form-control"]) %>
+        </div>
+        <div class="col">
+          <%= b.(:day, [selected: today(@conn.assigns.current_user.timezone).day, class: "form-control"]) %> 
+        </div>
+        <div class="col">
+          <%= b.(:year, [selected: today(@conn.assigns.current_user.timezone).year, class: "form-control"]) %>
+        </div>
+      </div>
+    </div>
+
+    <%= error_tag f, :datetime %>
+
+    <div class="form-group">
+      <label class="control-label">Time</label>
+      <div class="form-row">
+        <div class="col">
+          <%= b.(:hour, [selected: today(@conn.assigns.current_user.timezone).hour, class: "form-control"]) %>
+        </div>
+        :
+        <div class="col">
+          <%= b.(:minute, [selected: today(@conn.assigns.current_user.timezone).minute, class: "form-control"]) %>
+        </div> 
+      </div>
+    </div>
+  <% end %>
+
+  <%= hidden_input f, :user_id, value: @conn.assigns.current_user.id %>
+
+  <div class="form-group">
+    <%= label f, :recurring, "Frequency", class: "control-label" %>
+    <%= select f, :recurring, get_frequency_options(), class: "form-control" %>
+    <%= error_tag f, :recurring %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :body, "Message" %>
+    <%= textarea f, :body, class: "form-control" %>
+    <%= error_tag f, :body %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>
