@@ -10,13 +10,13 @@
       <label class="control-label">Date</label>
       <div class="form-row">
         <div class="col">
-          <%= b.(:month, [selected: today(@conn.assigns.current_user.timezone).month, class: "form-control"]) %>
+          <%= b.(:month, [selected: today(@current_user.timezone).month, class: "form-control"]) %>
         </div>
         <div class="col">
-          <%= b.(:day, [selected: today(@conn.assigns.current_user.timezone).day, class: "form-control"]) %> 
+          <%= b.(:day, [selected: today(@current_user.timezone).day, class: "form-control"]) %> 
         </div>
         <div class="col">
-          <%= b.(:year, [selected: today(@conn.assigns.current_user.timezone).year, class: "form-control"]) %>
+          <%= b.(:year, [selected: today(@current_user.timezone).year, class: "form-control"]) %>
         </div>
       </div>
     </div>
@@ -27,17 +27,17 @@
       <label class="control-label">Time</label>
       <div class="form-row">
         <div class="col">
-          <%= b.(:hour, [selected: today(@conn.assigns.current_user.timezone).hour, class: "form-control"]) %>
+          <%= b.(:hour, [selected: today(@current_user.timezone).hour, class: "form-control"]) %>
         </div>
         :
         <div class="col">
-          <%= b.(:minute, [selected: today(@conn.assigns.current_user.timezone).minute, class: "form-control"]) %>
+          <%= b.(:minute, [selected: today(@current_user.timezone).minute, class: "form-control"]) %>
         </div> 
       </div>
     </div>
   <% end %>
 
-  <%= hidden_input f, :user_id, value: @conn.assigns.current_user.id %>
+  <%= hidden_input f, :user_id, value: @current_user.id %>
 
   <div class="form-group">
     <%= label f, :recurring, "Frequency", class: "control-label" %>

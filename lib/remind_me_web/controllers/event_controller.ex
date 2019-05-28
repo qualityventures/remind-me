@@ -15,7 +15,7 @@ defmodule RemindMeWeb.EventController do
   end
 
   def new(conn, _params) do
-    changeset = Events.change_event(%Event{})
+    changeset = Event.changeset(%Event{}, %{})
     render(conn, "new.html", changeset: changeset)
   end
 

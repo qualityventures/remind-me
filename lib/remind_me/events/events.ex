@@ -1,6 +1,8 @@
 defmodule RemindMe.Events do
   import Ecto.Query, warn: false
+  import Ecto.Changeset, only: [get_field: 2, put_change: 3]
 
+  alias RemindMe.Accounts
   alias RemindMe.Repo
   alias RemindMe.Email
   alias RemindMe.Mailer
@@ -121,7 +123,18 @@ defmodule RemindMe.Events do
   def create_event(attrs \\ %{}) do
     %Event{}
     |> Event.changeset(attrs)
+    |> datetime_to_utc()
     |> Repo.insert()
+  end
+
+  defp datetime_to_utc(%{errors: errors} = changeset) when errors != [], do: changeset
+
+  defp datetime_to_utc(changeset) do
+    naive = DateTime.to_naive(get_field(changeset, :datetime))
+    user = Accounts.get(get_field(changeset, :user_id))
+    with_tz = DateTime.from_naive!(naive, user.timezone)
+    {:ok, utc_time} = DateTime.shift_zone(with_tz, "Etc/UTC")
+    put_change(changeset, :datetime, utc_time)
   end
 
   def update_event(%Event{} = event, attrs) do
@@ -135,6 +148,16 @@ defmodule RemindMe.Events do
   end
 
   def change_event(%Event{} = event) do
-    Event.changeset(event, %{})
+    event = Repo.preload(event, :user)
+
+    event
+    |> Map.put(:datetime, datetime_from_utc(event.datetime, event.user.timezone))
+    |> Event.changeset(%{})
+  end
+
+  def datetime_from_utc(datetime, timezone) do
+    IO.inspect(datetime)
+    {:ok, with_tz} = DateTime.shift_zone(datetime, timezone) |> IO.inspect()
+    with_tz
   end
 end
