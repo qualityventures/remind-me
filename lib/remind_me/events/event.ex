@@ -24,7 +24,6 @@ defmodule RemindMe.Events.Event do
   end
 
   def validate_future_date(%{changes: %{datetime: datetime}} = changeset) do
-    IO.inspect(datetime)
     user = Accounts.get(get_field(changeset, :user_id))
     {:ok, now} = DateTime.now(user.timezone)
     naive_now = DateTime.to_naive(now)

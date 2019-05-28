@@ -23,7 +23,7 @@ defmodule RemindMeWeb.EventController do
     user = conn.assigns.current_user
     event_params = %{event_params | "user_id" => user.id}
 
-    case Events.create_event(event_params) do
+    case Events.create_event_from_ui(event_params) do
       {:ok, _event} ->
         conn
         |> put_flash(:info, "Reminder created successfully.")
@@ -49,7 +49,7 @@ defmodule RemindMeWeb.EventController do
     event = Events.get_event!(id)
 
     if event.user_id == conn.assigns.current_user.id do
-      case Events.update_event(event, event_params) do
+      case Events.update_event_from_ui(event, event_params) do
         {:ok, _event} ->
           conn
           |> put_flash(:info, "Reminder updated successfully.")

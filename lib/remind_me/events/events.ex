@@ -1,6 +1,5 @@
 defmodule RemindMe.Events do
   import Ecto.Query, warn: false
-  import Ecto.Changeset, only: [get_field: 2, put_change: 3]
 
   alias RemindMe.Accounts
   alias RemindMe.Repo
@@ -120,21 +119,35 @@ defmodule RemindMe.Events do
 
   def get_event!(id), do: Repo.get!(Event, id)
 
+  def create_event_from_ui(%{"datetime" => dt, "user_id" => user_id} = attrs) do
+    dt = Enum.map(dt, fn {k, v} -> {k, String.to_integer(v)} end) |> Map.new()
+    {:ok, dt} = NaiveDateTime.new(dt["year"], dt["month"], dt["day"], dt["hour"], dt["minute"], 0)
+    attrs = Map.put(attrs, "datetime", datetime_to_utc(dt, user_id))
+    create_event(attrs)
+  end
+
   def create_event(attrs \\ %{}) do
     %Event{}
     |> Event.changeset(attrs)
-    |> datetime_to_utc()
     |> Repo.insert()
   end
 
-  defp datetime_to_utc(%{errors: errors} = changeset) when errors != [], do: changeset
-
-  defp datetime_to_utc(changeset) do
-    naive = DateTime.to_naive(get_field(changeset, :datetime))
-    user = Accounts.get(get_field(changeset, :user_id))
+  defp datetime_to_utc(naive, user_id) do
+    user = Accounts.get(user_id)
     with_tz = DateTime.from_naive!(naive, user.timezone)
     {:ok, utc_time} = DateTime.shift_zone(with_tz, "Etc/UTC")
-    put_change(changeset, :datetime, utc_time)
+    utc_time
+  end
+
+  def update_event_from_ui(%{user_id: user_id} = event, %{"datetime" => dt} = attrs) do
+    dt = Enum.map(dt, fn {k, v} -> {k, String.to_integer(v)} end) |> Map.new()
+    {:ok, dt} = NaiveDateTime.new(dt["year"], dt["month"], dt["day"], dt["hour"], dt["minute"], 0)
+    attrs = Map.put(attrs, "datetime", datetime_to_utc(dt, user_id))
+    update_event(event, attrs)
+  end
+
+  def update_event_from_ui(event, attrs) do
+    update_event(event, attrs)
   end
 
   def update_event(%Event{} = event, attrs) do
@@ -156,8 +169,7 @@ defmodule RemindMe.Events do
   end
 
   def datetime_from_utc(datetime, timezone) do
-    IO.inspect(datetime)
-    {:ok, with_tz} = DateTime.shift_zone(datetime, timezone) |> IO.inspect()
+    {:ok, with_tz} = DateTime.shift_zone(datetime, timezone)
     with_tz
   end
 end
