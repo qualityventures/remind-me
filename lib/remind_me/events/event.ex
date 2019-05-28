@@ -20,5 +20,17 @@ defmodule RemindMe.Events.Event do
     event
     |> cast(attrs, [:datetime, :body, :recurring, :user_id])
     |> validate_required([:datetime, :body, :user_id])
+    |> validate_future_date()
+  end
+
+  def validate_future_date(%{changes: changes} = changeset) when changes == %{}, do: changeset
+
+  def validate_future_date(changeset) do
+    value = Map.get(changeset.changes, :datetime)
+
+    case DateTime.compare(value, DateTime.utc_now()) do
+      :gt -> changeset
+      _ -> add_error(changeset, :datetime, "Date must be in the future")
+    end
   end
 end
