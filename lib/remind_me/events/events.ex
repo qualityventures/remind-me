@@ -2,6 +2,7 @@ defmodule RemindMe.Events do
   import Ecto.Query, warn: false
 
   alias RemindMe.Accounts
+  alias RemindMe.Messages
   alias RemindMe.Repo
   alias RemindMe.Email
   alias RemindMe.Mailer
@@ -26,9 +27,10 @@ defmodule RemindMe.Events do
     with true <- DateTime.compare(event.datetime, now) == :lt,
          event = Repo.preload(event, :user),
          subject = build_subject(event.body) do
-      # Send email and create next event without regard to success,
+      # Send email, log message, and create next event without regard to success
       # in case something fails so the process doesn't block up
       Agent.start(fn -> send_email(subject, event.body, event.user.email) end)
+      Agent.start(fn -> Messages.create_message(%{body: event.body, user_id: event.user_id}) end)
       Agent.start(fn -> create_next_event(event) end)
 
       delete_event(event)

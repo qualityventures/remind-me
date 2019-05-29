@@ -7,6 +7,7 @@ defmodule RemindMe.Messages do
   alias RemindMe.Repo
 
   alias RemindMe.Messages.MessageConcat
+  alias RemindMe.Message
 
   @doc """
   Returns the list of messages_concat.
@@ -105,5 +106,11 @@ defmodule RemindMe.Messages do
   def get_concat_by_ref(ref, to) do
     query = from(m in MessageConcat, where: m.ref == ^ref and m.to == ^to, select: m)
     Repo.all(query)
+  end
+
+  def create_message(attrs \\ %{}) do
+    %Message{}
+    |> Message.changeset(attrs)
+    |> Repo.insert()
   end
 end

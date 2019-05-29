@@ -19,6 +19,6 @@ defmodule RemindMe.Message do
   def changeset(%Message{} = message, attrs) do
     message
     |> cast(attrs, [:body, :from, :message_sid, :to, :user_id])
-    |> validate_required([:body, :from, :message_sid, :to, :user_id])
+    |> validate_required([:body, :user_id])
   end
 end
