@@ -1,7 +1,7 @@
-defmodule RemindMe.Message do
+defmodule RemindMe.Messages.Message do
   use Ecto.Schema
   import Ecto.Changeset
-  alias RemindMe.Message
+  alias RemindMe.Messages.Message
 
 
   schema "messages" do

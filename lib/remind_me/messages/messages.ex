@@ -7,7 +7,7 @@ defmodule RemindMe.Messages do
   alias RemindMe.Repo
 
   alias RemindMe.Messages.MessageConcat
-  alias RemindMe.Message
+  alias RemindMe.Messages.Message
 
   @doc """
   Returns the list of messages_concat.

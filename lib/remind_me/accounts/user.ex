@@ -19,7 +19,7 @@ defmodule RemindMe.Accounts.User do
     field(:timezone, :string, default: "US/Eastern")
 
     has_many(:connections, RemindMe.Connections.Connection)
-    has_many(:messages, RemindMe.Message)
+    has_many(:messages, RemindMe.Messages.Message)
     has_many(:events, RemindMe.Events.Event)
 
     timestamps()
