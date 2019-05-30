@@ -24,6 +24,8 @@ defmodule RemindMeWeb.UserController do
   end
 
   def create(conn, %{"user" => %{"email" => email} = user_params}) do
+    email = String.downcase(email)
+    %{user_params | "email" => email}
     key = Phauxth.Token.sign(conn, %{"email" => email})
 
     case Accounts.create_user(user_params) do
@@ -62,6 +64,12 @@ defmodule RemindMeWeb.UserController do
   end
 
   def update(%Plug.Conn{assigns: %{current_user: user}} = conn, %{"user" => user_params}) do
+    user_params =
+      case user_params["email"] do
+        nil -> user_params
+        email -> %{user_params | "email" => String.downcase(email)}
+      end
+
     case Accounts.update_user(user, user_params) do
       {:ok, _user} ->
         success(conn, "Settings updated successfully", Routes.home_path(conn, :index))
