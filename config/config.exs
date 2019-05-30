@@ -20,7 +20,7 @@ config :phauxth,
   endpoint: RemindMeWeb.Endpoint
 
 # Configures the Sendgrid mailer
-config :remind_me, RemindMe.Mailer,
+config :remind_me, RemindMe.Emails.Mailer,
   adapter: Bamboo.SendGridAdapter,
   api_key: System.get_env("SENDGRID_API_KEY")
 
@@ -32,9 +32,8 @@ config :logger, :console,
 # Configures Sentry error logging
 config :sentry,
   dsn: "https://08e4991d3cc84c80a1d4c6ed8dc92088@sentry.io/433417",
-  enable_source_code_context: true,
-  root_source_code_path: File.cwd!,
-  included_environments: [:prod]
+  included_environments: [:prod],
+  environment_name: Mix.env
 
 # Sets default timezone database
 config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase

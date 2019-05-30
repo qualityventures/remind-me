@@ -3,7 +3,7 @@ defmodule RemindMeWeb.InboundParseController do
 
   import Bamboo.Email
 
-  alias RemindMe.Mailer
+  alias RemindMe.Emails.Mailer
 
   def new(conn, %{"html" => html, "subject" => subject, "from" => from}) do
     new_email()

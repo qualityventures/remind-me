@@ -1,4 +1,4 @@
-defmodule RemindMe.Email do
+defmodule RemindMe.Emails do
   import Bamboo.Email
 
   def email_from_message(message_subject, message_body, email) do

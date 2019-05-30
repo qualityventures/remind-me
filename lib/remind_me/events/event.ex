@@ -3,7 +3,7 @@ defmodule RemindMe.Events.Event do
 
   import Ecto.Changeset
 
-  alias RemindMe.Accounts
+  alias RemindMe.Events
   alias RemindMe.Accounts.User
 
   schema "events" do
@@ -16,6 +16,11 @@ defmodule RemindMe.Events.Event do
     belongs_to :user, User
   end
 
+  def reset_dt_to_user_tz(changeset, timezone) do
+    datetime = get_field(changeset, :datetime)
+    change(changeset, %{datetime: Events.datetime_from_utc(datetime, timezone)})
+  end
+
   def changeset(event, attrs) do
     event
     |> cast(attrs, [:datetime, :body, :recurring, :user_id])
@@ -24,11 +29,7 @@ defmodule RemindMe.Events.Event do
   end
 
   def validate_future_date(%{changes: %{datetime: datetime}} = changeset) do
-    user = Accounts.get(get_field(changeset, :user_id))
-    {:ok, now} = DateTime.now(user.timezone)
-    naive_now = DateTime.to_naive(now)
-
-    case NaiveDateTime.compare(DateTime.to_naive(datetime), naive_now) do
+    case DateTime.compare(datetime, DateTime.utc_now()) do
       :gt -> changeset
       _ -> add_error(changeset, :datetime, "date must be in future, check timezone in settings")
     end

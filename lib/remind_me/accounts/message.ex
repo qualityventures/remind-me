@@ -31,7 +31,7 @@ defmodule RemindMe.Accounts.Message do
   """
 
   import Bamboo.Email
-  alias RemindMe.Mailer
+  alias RemindMe.Emails.Mailer
 
   @doc """
   An email with a confirmation link in it.

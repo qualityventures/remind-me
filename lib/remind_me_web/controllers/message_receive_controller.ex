@@ -1,7 +1,9 @@
 defmodule RemindMeWeb.MessageReceiveController do
   use RemindMeWeb, :controller
 
-  alias RemindMe.{Repo, Message, Connections, Messages}
+  alias RemindMe.{Repo, Connections, Messages, Emails}
+  alias RemindMe.Messages.Message
+  alias RemindMe.Emails.Mailer
 
   # Process if it's a multi-part message
   def process(conn, %{"concat" => "true"} = params) do
@@ -60,8 +62,8 @@ defmodule RemindMeWeb.MessageReceiveController do
 
         # Send the email.
         subject
-        |> RemindMe.Email.email_from_message(full_body, connection.destination.email)
-        |> RemindMe.Mailer.deliver_now()
+        |> Emails.email_from_message(full_body, connection.destination.email)
+        |> Mailer.deliver_now()
       end
     end
     # Return 200 with no body
@@ -105,8 +107,8 @@ defmodule RemindMeWeb.MessageReceiveController do
 
         # Send the email.
         subject
-        |> RemindMe.Email.email_from_message(body, connection.destination.email)
-        |> RemindMe.Mailer.deliver_now()
+        |> Emails.email_from_message(body, connection.destination.email)
+        |> Mailer.deliver_now()
 
         # Return 200 with no body
         text(conn, "")

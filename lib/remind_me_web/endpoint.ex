@@ -1,5 +1,6 @@
 defmodule RemindMeWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :remind_me
+  use Sentry.Phoenix.Endpoint
 
   socket "/socket", RemindMeWeb.UserSocket, websocket: true
 

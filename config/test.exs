@@ -27,5 +27,5 @@ config :bcrypt_elixir, log_rounds: 4
 #config :pbkdf2_elixir, rounds: 1
 
 # Mailer test configuration
-config :remind_me, RemindMe.Mailer,
+config :remind_me, RemindMe.Emails.Mailer,
   adapter: Bamboo.TestAdapter

@@ -19,25 +19,38 @@ defmodule RemindMeWeb.EventController do
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(conn, %{"event" => event_params}) do
+  def create(conn, %{"event" => %{"datetime" => datetime} = event_params}) do
     user = conn.assigns.current_user
-    event_params = %{event_params | "user_id" => user.id}
 
-    case Events.create_event_from_ui(event_params) do
+    # Ensure current user id is used, and convert the datetime from the UI,
+    # which is in the user's timezone, to UTC for storage
+    event_params =
+      event_params
+      |> Map.put("user_id", user.id)
+      |> Map.put("datetime", Events.dt_params_to_utc(datetime, user.timezone))
+
+    case Events.create_event(event_params) do
       {:ok, _event} ->
         conn
         |> put_flash(:info, "Reminder created successfully.")
         |> redirect(to: Routes.event_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
+        changeset = Event.reset_dt_to_user_tz(changeset, user.timezone)
         render(conn, "new.html", changeset: changeset)
     end
   end
 
   def edit(conn, %{"id" => id}) do
+    user = conn.assigns.current_user
     event = Events.get_event!(id)
 
-    if event.user_id == conn.assigns.current_user.id do
+    IO.inspect(event.datetime)
+
+    # Convert to user's timezone before sending to UI
+    event = %{event | datetime: Events.datetime_from_utc(event.datetime, user.timezone)}
+
+    if event.user_id == user.id do
       changeset = Events.change_event(event)
       render(conn, "edit.html", event: event, changeset: changeset)
     else
@@ -45,17 +58,22 @@ defmodule RemindMeWeb.EventController do
     end
   end
 
-  def update(conn, %{"id" => id, "event" => event_params}) do
+  def update(conn, %{"id" => id, "event" => %{"datetime" => dt} = event_params}) do
+    user = conn.assigns.current_user
     event = Events.get_event!(id)
 
-    if event.user_id == conn.assigns.current_user.id do
-      case Events.update_event_from_ui(event, event_params) do
+    # Convert the datetime from the UI, which is in the user's timezone, to UTC for storage
+    event_params = %{event_params | "datetime" => Events.dt_params_to_utc(dt, user.timezone)}
+
+    if event.user_id == user.id do
+      case Events.update_event(event, event_params) do
         {:ok, _event} ->
           conn
           |> put_flash(:info, "Reminder updated successfully.")
           |> redirect(to: Routes.event_path(conn, :index))
 
         {:error, %Ecto.Changeset{} = changeset} ->
+          changeset = Event.reset_dt_to_user_tz(changeset, user.timezone)
           render(conn, "edit.html", event: event, changeset: changeset)
       end
     else

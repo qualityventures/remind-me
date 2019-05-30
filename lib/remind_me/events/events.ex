@@ -1,11 +1,10 @@
 defmodule RemindMe.Events do
   import Ecto.Query, warn: false
 
-  alias RemindMe.Accounts
   alias RemindMe.Messages
   alias RemindMe.Repo
-  alias RemindMe.Email
-  alias RemindMe.Mailer
+  alias RemindMe.Emails
+  alias RemindMe.Emails.Mailer
   alias RemindMe.Events.Event
 
   @day 24 * 60 * 60
@@ -50,7 +49,7 @@ defmodule RemindMe.Events do
 
   def send_email(subject, body, email) do
     subject
-    |> Email.email_from_message(body, email)
+    |> Emails.email_from_message(body, email)
     |> Mailer.deliver_now()
   end
 
@@ -121,35 +120,10 @@ defmodule RemindMe.Events do
 
   def get_event!(id), do: Repo.get!(Event, id)
 
-  def create_event_from_ui(%{"datetime" => dt, "user_id" => user_id} = attrs) do
-    dt = Enum.map(dt, fn {k, v} -> {k, String.to_integer(v)} end) |> Map.new()
-    {:ok, dt} = NaiveDateTime.new(dt["year"], dt["month"], dt["day"], dt["hour"], dt["minute"], 0)
-    attrs = Map.put(attrs, "datetime", datetime_to_utc(dt, user_id))
-    create_event(attrs)
-  end
-
   def create_event(attrs \\ %{}) do
     %Event{}
     |> Event.changeset(attrs)
     |> Repo.insert()
-  end
-
-  defp datetime_to_utc(naive, user_id) do
-    user = Accounts.get(user_id)
-    with_tz = DateTime.from_naive!(naive, user.timezone)
-    {:ok, utc_time} = DateTime.shift_zone(with_tz, "Etc/UTC")
-    utc_time
-  end
-
-  def update_event_from_ui(%{user_id: user_id} = event, %{"datetime" => dt} = attrs) do
-    dt = Enum.map(dt, fn {k, v} -> {k, String.to_integer(v)} end) |> Map.new()
-    {:ok, dt} = NaiveDateTime.new(dt["year"], dt["month"], dt["day"], dt["hour"], dt["minute"], 0)
-    attrs = Map.put(attrs, "datetime", datetime_to_utc(dt, user_id))
-    update_event(event, attrs)
-  end
-
-  def update_event_from_ui(event, attrs) do
-    update_event(event, attrs)
   end
 
   def update_event(%Event{} = event, attrs) do
@@ -162,12 +136,19 @@ defmodule RemindMe.Events do
     Repo.delete(event)
   end
 
-  def change_event(%Event{} = event) do
-    event = Repo.preload(event, :user)
+  def change_event(%Event{} = event), do: Event.changeset(event, %{})
 
-    event
-    |> Map.put(:datetime, datetime_from_utc(event.datetime, event.user.timezone))
-    |> Event.changeset(%{})
+  def dt_params_to_utc(datetime, timezone) do
+    %{"year" => y, "month" => m, "day" => d, "hour" => h, "minute" => min} = datetime
+    [y, m, d, h, min] = Enum.map([y, m, d, h, min], &String.to_integer/1)
+    {:ok, naive} = NaiveDateTime.new(y, m, d, h, min, 0)
+    datetime_to_utc(naive, timezone)
+  end
+
+  def datetime_to_utc(naive, timezone) do
+    with_tz = DateTime.from_naive!(naive, timezone)
+    {:ok, utc_time} = DateTime.shift_zone(with_tz, "Etc/UTC")
+    utc_time
   end
 
   def datetime_from_utc(datetime, timezone) do
