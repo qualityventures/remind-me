@@ -3,7 +3,6 @@ defmodule RemindMe.Accounts.User do
 
   import Ecto.Changeset
 
-  alias RemindMe.Accounts
   alias RemindMe.Accounts.User
 
   schema "users" do
@@ -39,7 +38,6 @@ defmodule RemindMe.Accounts.User do
     |> unique_email
     |> validate_password(:password)
     |> put_pass_hash
-    |> format_phone()
   end
 
   defp unique_email(changeset) do
@@ -73,10 +71,4 @@ defmodule RemindMe.Accounts.User do
   end
 
   defp strong_password?(_), do: {:error, "The password is too short"}
-
-  def format_phone(%{changes: %{phone: phone}} = changeset) do
-    new_phone = Accounts.format_phone(phone)
-
-    change(changeset, %{phone: new_phone})
-  end
 end

@@ -23,9 +23,8 @@ defmodule RemindMeWeb.UserController do
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(conn, %{"user" => %{"email" => email} = user_params}) do
-    email = String.downcase(email)
-    %{user_params | "email" => email}
+  def create(conn, %{"user" => %{"email" => email, "phone" => phone} = user_params}) do
+    %{user_params | "email" => String.downcase(email), "phone" => Accounts.format_phone(phone)}
     key = Phauxth.Token.sign(conn, %{"email" => email})
 
     case Accounts.create_user(user_params) do
