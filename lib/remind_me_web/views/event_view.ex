@@ -21,7 +21,7 @@ defmodule RemindMeWeb.EventView do
   defp hour(hour) when hour <= 12, do: hour
   defp hour(hour), do: hour - 12
 
-  defp am_or_pm(hour) when hour <= 12, do: "am"
+  defp am_or_pm(hour) when hour < 12, do: "am"
   defp am_or_pm(_hour), do: "pm"
 
   defp zero_format(unit) when unit <= 9, do: "0#{unit}"
