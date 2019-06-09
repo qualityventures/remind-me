@@ -20,6 +20,9 @@ config :phauxth,
   crypto_module: Argon2,
   token_module: RemindMeWeb.Auth.Token
 
+# Configures the library for Bamboo
+config :bamboo, :json_library, Jason
+
 # Configures the Sendgrid mailer
 config :remind_me, RemindMe.Emails.Mailer,
   adapter: Bamboo.SendGridAdapter,
