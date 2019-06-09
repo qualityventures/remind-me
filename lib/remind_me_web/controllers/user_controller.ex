@@ -6,6 +6,7 @@ defmodule RemindMeWeb.UserController do
   alias Phauxth.Log
   alias RemindMe.Connections
   alias RemindMe.Accounts
+  alias RemindMeWeb.Auth.Token
 
   plug(:admin_check when action in [:index, :show])
   plug(:guest_check when action in [:new, :create])
@@ -25,7 +26,7 @@ defmodule RemindMeWeb.UserController do
 
   def create(conn, %{"user" => %{"email" => email, "phone" => phone} = user_params}) do
     %{user_params | "email" => String.downcase(email), "phone" => Accounts.format_phone(phone)}
-    key = Phauxth.Token.sign(conn, %{"email" => email})
+    key = Token.sign(%{"email" => user_params["email"]})
 
     case Accounts.create_user(user_params) do
       {:ok, user} ->

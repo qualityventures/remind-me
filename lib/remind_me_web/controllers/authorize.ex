@@ -1,7 +1,7 @@
 defmodule RemindMeWeb.Authorize do
   import Plug.Conn
   import Phoenix.Controller
-  import RemindMeWeb.Router.Helpers
+  alias RemindMeWeb.Router.Helpers, as: Routes
 
   # This function can be used to customize the `action` function in
   # the controller so that only authenticated users can access each route.
@@ -31,7 +31,7 @@ defmodule RemindMeWeb.Authorize do
   def guest_check(%Plug.Conn{assigns: %{current_user: nil}} = conn, _opts), do: conn
 
   def guest_check(%Plug.Conn{assigns: %{current_user: _current_user}} = conn, _opts) do
-    error(conn, "", home_path(conn, :dashboard))
+    error(conn, "", Routes.home_path(conn, :dashboard))
   end
 
   # Plug to only allow authenticated users with the correct id to access the resource.
@@ -44,7 +44,7 @@ defmodule RemindMeWeb.Authorize do
         %Plug.Conn{params: %{"id" => id}, assigns: %{current_user: current_user}} = conn,
         _opts
       ) do
-    (id == to_string(current_user.id) and conn) || error(conn, "", home_path(conn, :index))
+    (id == to_string(current_user.id) and conn) || error(conn, "", Routes.home_path(conn, :index))
   end
 
   def owner_check(%Plug.Conn{assigns: %{current_user: nil}} = conn, _opts) do
@@ -52,7 +52,7 @@ defmodule RemindMeWeb.Authorize do
   end
 
   def owner_check(%Plug.Conn{assigns: %{current_user: current_user}} = conn, user) do
-    user == current_user || error(conn, "", home_path(conn, :index))
+    user == current_user || error(conn, "", Routes.home_path(conn, :index))
   end
 
   # Plug to only allow admins access to the resource
@@ -85,9 +85,11 @@ defmodule RemindMeWeb.Authorize do
     |> success("You have been logged in", get_session(conn, :request_path) || path)
   end
 
-  def need_login(conn) do
+  defp need_login(conn) do
     conn
     |> put_session(:request_path, current_path(conn))
-    |> error("You need to log in to view this page", session_path(conn, :new))
+    |> put_flash(:error, "You need to log in to view this page")
+    |> redirect(to: Routes.session_path(conn, :new))
+    |> halt()
   end
 end

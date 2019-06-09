@@ -54,6 +54,7 @@ defmodule RemindMe.Accounts.Message do
       )
     |> Mailer.deliver_now()
   end
+
   def reset_request(address, key) do
     prep_mail(address)
     |> subject("Remind Me - Reset your password")
