@@ -39,7 +39,6 @@ defmodule RemindMe.Mixfile do
       {:argon2_elixir, "~> 2.0"},
       {:bcrypt_elixir, "~> 2.0"},
       {:bamboo, "~> 1.1"},
-      {:distillery, "~> 2.0"},
       {:httpoison, "~> 1.4"},
       {:sentry, "~> 7.0"},
       {:hackney, "~> 1.14"},
