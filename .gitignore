@@ -32,3 +32,6 @@ helper.txt
 
 # Ignore backup files
 /*.bak
+
+# Ignore tool-versions
+.tool-versions
