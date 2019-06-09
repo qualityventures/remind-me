@@ -16,8 +16,9 @@ config :remind_me, RemindMeWeb.Endpoint,
 
 # Phauxth authentication configuration
 config :phauxth,
-  token_salt: "Num9T9Fb",
-  endpoint: RemindMeWeb.Endpoint
+  user_context: RemindMe.Accounts,
+  crypto_module: Argon2,
+  token_module: RemindMeWeb.Auth.Token
 
 # Configures the Sendgrid mailer
 config :remind_me, RemindMe.Emails.Mailer,

@@ -10,7 +10,7 @@ defmodule RemindMeWeb.Router do
     plug(:protect_from_forgery)
     plug(:put_secure_browser_headers)
     plug(Phauxth.Authenticate)
-    plug(Phauxth.Remember)
+    plug Phauxth.Remember, create_session_func: &RemindMeWeb.Auth.Utils.create_session/1
   end
 
   pipeline :api do
@@ -33,7 +33,7 @@ defmodule RemindMeWeb.Router do
     resources("/events", EventController, except: [:show])
 
     # Authentication concerns
-    resources("/sessions", SessionController, only: [:new, :create, :delete])
+    resources "/sessions", SessionController, only: [:new, :create, :delete]
     get("/confirm", ConfirmController, :index)
     resources("/password_resets", PasswordResetController, only: [:new, :create])
     get("/password_resets/edit", PasswordResetController, :edit)
