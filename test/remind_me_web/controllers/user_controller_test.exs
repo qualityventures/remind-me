@@ -28,7 +28,7 @@ defmodule RemindMeWeb.UserControllerTest do
       assert html_response(conn, 302)
     end
 
-    test "renders /users error for nil user", %{conn: conn}  do
+    test "renders /users error for nil user", %{conn: conn} do
       conn = get(conn, Routes.user_path(conn, :index))
       assert redirected_to(conn) == Routes.session_path(conn, :new)
     end

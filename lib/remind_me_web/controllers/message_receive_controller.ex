@@ -66,6 +66,7 @@ defmodule RemindMeWeb.MessageReceiveController do
         |> Mailer.deliver_now()
       end
     end
+
     # Return 200 with no body
     text(conn, "")
   end

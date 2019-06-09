@@ -81,8 +81,7 @@ defmodule RemindMe.Accounts.User do
   end
 
   # If you are using Argon2 or Pbkdf2, change Bcrypt to Argon2 or Pbkdf2
-  defp put_pass_hash(%Ecto.Changeset{valid?: true, changes:
-      %{password: password}} = changeset) do
+  defp put_pass_hash(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
     change(changeset, Argon2.add_hash(password))
   end
 

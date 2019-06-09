@@ -7,7 +7,13 @@ defmodule RemindMe.MessagesTest do
     alias RemindMe.Messages.MessageConcat
 
     @valid_attrs %{body: "some body", part: 42, ref: "some ref", to: "some to", total: 42}
-    @update_attrs %{body: "some updated body", part: 43, ref: "some updated ref", to: "some updated to", total: 43}
+    @update_attrs %{
+      body: "some updated body",
+      part: 43,
+      ref: "some updated ref",
+      to: "some updated to",
+      total: 43
+    }
     @invalid_attrs %{body: nil, part: nil, ref: nil, to: nil, total: nil}
 
     def message_concat_fixture(attrs \\ %{}) do
@@ -30,7 +36,9 @@ defmodule RemindMe.MessagesTest do
     end
 
     test "create_message_concat/1 with valid data creates a message_concat" do
-      assert {:ok, %MessageConcat{} = message_concat} = Messages.create_message_concat(@valid_attrs)
+      assert {:ok, %MessageConcat{} = message_concat} =
+               Messages.create_message_concat(@valid_attrs)
+
       assert message_concat.body == "some body"
       assert message_concat.part == 42
       assert message_concat.ref == "some ref"
@@ -55,7 +63,10 @@ defmodule RemindMe.MessagesTest do
 
     test "update_message_concat/2 with invalid data returns error changeset" do
       message_concat = message_concat_fixture()
-      assert {:error, %Ecto.Changeset{}} = Messages.update_message_concat(message_concat, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Messages.update_message_concat(message_concat, @invalid_attrs)
+
       assert message_concat == Messages.get_message_concat!(message_concat.id)
     end
 

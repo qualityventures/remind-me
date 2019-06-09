@@ -2,7 +2,6 @@ defmodule RemindMe.Messages.MessageConcat do
   use Ecto.Schema
   import Ecto.Changeset
 
-
   schema "messages_concat" do
     field :body, :string
     field :part, :integer

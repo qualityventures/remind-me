@@ -2,7 +2,6 @@ defmodule RemindMe.Connections.ClientNumber do
   use Ecto.Schema
   import Ecto.Changeset
 
-
   schema "client_numbers" do
     field :number, :string
 

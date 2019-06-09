@@ -35,6 +35,7 @@ defmodule RemindMeWeb.UserController do
 
         Log.info(%Log{user: user.id, message: "user created"})
         Accounts.Message.confirm_request(email, key)
+
         Connections.create_connection(%{
           "user_id" => user.id,
           "server_number_id" => server_number.id,

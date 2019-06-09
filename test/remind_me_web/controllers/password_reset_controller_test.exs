@@ -39,12 +39,15 @@ defmodule RemindMeWeb.PasswordResetControllerTest do
 
       reset_conn =
         put(conn, Routes.password_reset_path(conn, :update), password_reset: valid_attrs)
+
       assert get_flash(reset_conn, :info) =~ "password has been reset"
       assert redirected_to(reset_conn) == Routes.session_path(conn, :new)
+
       conn =
         post(conn, Routes.session_path(conn, :create),
           session: %{email: "gladys@example.com", password: "^hEsdg*F899"}
         )
+
       assert redirected_to(conn) == Routes.home_path(conn, :index)
     end
 

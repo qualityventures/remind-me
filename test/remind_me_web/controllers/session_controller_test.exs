@@ -12,7 +12,13 @@ defmodule RemindMeWeb.SessionControllerTest do
   }
   @invalid_attrs %{email: "robin@example.com", password: "cannotGue$$it"}
   @unconfirmed_attrs %{email: "lancelot@example.com", password: "reallyHard2gue$$"}
-  @rem_attrs %{email: "robin@example.com", password: "reallyHard2gue$$", remember_me: "true", first: "Damon", last: "Janis"}
+  @rem_attrs %{
+    email: "robin@example.com",
+    password: "reallyHard2gue$$",
+    remember_me: "true",
+    first: "Damon",
+    last: "Janis"
+  }
   @no_rem_attrs Map.merge(@rem_attrs, %{remember_me: "false"})
 
   setup %{conn: conn} do

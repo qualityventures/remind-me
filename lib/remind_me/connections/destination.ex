@@ -4,7 +4,6 @@ defmodule RemindMe.Connections.Destination do
 
   alias RemindMe.Connections.Connection
 
-
   schema "destinations" do
     field :email, :string
     field :type, :string

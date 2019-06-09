@@ -58,9 +58,9 @@ defmodule RemindMe.Connections do
   def open_server_numbers(user) do
     used =
       user
-      |> Repo.preload([connections: :server_number])
+      |> Repo.preload(connections: :server_number)
       |> Map.get(:connections)
-      |> Enum.map(fn c -> c  |> Map.get(:server_number) |> Map.get(:number) end)
+      |> Enum.map(fn c -> c |> Map.get(:server_number) |> Map.get(:number) end)
 
     list_server_numbers()
     |> Enum.filter(fn n -> !(n.number in used) end)
@@ -211,7 +211,7 @@ defmodule RemindMe.Connections do
   def do_check_unique_server_number([server_number | tail], client, attrs) do
     connections =
       server_number
-      |> Repo.preload([connections: :client_number])
+      |> Repo.preload(connections: :client_number)
       |> Map.get(:connections)
 
     connections

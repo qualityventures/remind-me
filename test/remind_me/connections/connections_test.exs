@@ -30,7 +30,9 @@ defmodule RemindMe.ConnectionsTest do
     end
 
     test "create_server_number/1 with valid data creates a server_number" do
-      assert {:ok, %ServerNumber{} = server_number} = Connections.create_server_number(@valid_attrs)
+      assert {:ok, %ServerNumber{} = server_number} =
+               Connections.create_server_number(@valid_attrs)
+
       assert server_number.number == "some number"
     end
 
@@ -47,7 +49,10 @@ defmodule RemindMe.ConnectionsTest do
 
     test "update_server_number/2 with invalid data returns error changeset" do
       server_number = server_number_fixture()
-      assert {:error, %Ecto.Changeset{}} = Connections.update_server_number(server_number, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Connections.update_server_number(server_number, @invalid_attrs)
+
       assert server_number == Connections.get_server_number!(server_number.id)
     end
 
@@ -105,7 +110,10 @@ defmodule RemindMe.ConnectionsTest do
 
     test "update_connection/2 with invalid data returns error changeset" do
       connection = connection_fixture()
-      assert {:error, %Ecto.Changeset{}} = Connections.update_connection(connection, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Connections.update_connection(connection, @invalid_attrs)
+
       assert connection == Connections.get_connection!(connection.id)
     end
 
@@ -167,7 +175,10 @@ defmodule RemindMe.ConnectionsTest do
 
     test "update_destination/2 with invalid data returns error changeset" do
       destination = destination_fixture()
-      assert {:error, %Ecto.Changeset{}} = Connections.update_destination(destination, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Connections.update_destination(destination, @invalid_attrs)
+
       assert destination == Connections.get_destination!(destination.id)
     end
 
@@ -210,7 +221,9 @@ defmodule RemindMe.ConnectionsTest do
     end
 
     test "create_client_number/1 with valid data creates a client_number" do
-      assert {:ok, %ClientNumber{} = client_number} = Connections.create_client_number(@valid_attrs)
+      assert {:ok, %ClientNumber{} = client_number} =
+               Connections.create_client_number(@valid_attrs)
+
       assert client_number.number == "some number"
     end
 
@@ -227,7 +240,10 @@ defmodule RemindMe.ConnectionsTest do
 
     test "update_client_number/2 with invalid data returns error changeset" do
       client_number = client_number_fixture()
-      assert {:error, %Ecto.Changeset{}} = Connections.update_client_number(client_number, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Connections.update_client_number(client_number, @invalid_attrs)
+
       assert client_number == Connections.get_client_number!(client_number.id)
     end
 

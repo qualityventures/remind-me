@@ -13,7 +13,7 @@ defmodule RemindMe.Application do
       # Start the endpoint when the application starts
       supervisor(RemindMeWeb.Endpoint, []),
       # Start your own worker by calling: RemindMe.Worker.start_link(arg1, arg2, arg3)
-      worker(RemindMe.Chron.EventsPoll, []),
+      worker(RemindMe.Chron.EventsPoll, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

@@ -3,7 +3,6 @@ defmodule RemindMe.Messages.Message do
   import Ecto.Changeset
   alias RemindMe.Messages.Message
 
-
   schema "messages" do
     field :body, :string
     field :from, :string

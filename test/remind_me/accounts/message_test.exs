@@ -25,7 +25,10 @@ defmodule RemindMe.Accounts.MessageTest do
   test "sends reset password request email", %{email: email, key: key} do
     sent_email = Message.reset_request(email, key)
     assert sent_email.subject =~ "Reset your password"
-    assert sent_email.text_body =~ "password at https://www.remindme.live/password_resets/edit?key="
+
+    assert sent_email.text_body =~
+             "password at https://www.remindme.live/password_resets/edit?key="
+
     assert_delivered_email(Message.reset_request(email, key))
   end
 

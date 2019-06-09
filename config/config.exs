@@ -34,11 +34,11 @@ config :logger, :console,
 config :sentry,
   dsn: "https://08e4991d3cc84c80a1d4c6ed8dc92088@sentry.io/433417",
   included_environments: [:prod],
-  environment_name: Mix.env
+  environment_name: Mix.env()
 
 # Sets default timezone database
 config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{Mix.env}.exs"
+import_config "#{Mix.env()}.exs"

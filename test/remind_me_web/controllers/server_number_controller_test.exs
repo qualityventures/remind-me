@@ -14,14 +14,14 @@ defmodule RemindMeWeb.ServerNumberControllerTest do
 
   describe "index" do
     test "lists all server_numbers", %{conn: conn} do
-      conn = get conn, Routes.server_number_path(conn, :index)
+      conn = get(conn, Routes.server_number_path(conn, :index))
       assert html_response(conn, 200) =~ "Listing Server numbers"
     end
   end
 
   describe "new server_number" do
     test "renders form", %{conn: conn} do
-      conn = get conn, Routes.server_number_path(conn, :new)
+      conn = get(conn, Routes.server_number_path(conn, :new))
       assert html_response(conn, 200) =~ "New Server number"
     end
   end
@@ -33,7 +33,7 @@ defmodule RemindMeWeb.ServerNumberControllerTest do
       assert %{id: id} = redirected_params(conn)
       assert redirected_to(conn) == Routes.server_number_path(conn, :show, id)
 
-      conn = get conn, Routes.server_number_path(conn, :show, id)
+      conn = get(conn, Routes.server_number_path(conn, :show, id))
       assert html_response(conn, 200) =~ "Show Server number"
     end
 
@@ -46,8 +46,11 @@ defmodule RemindMeWeb.ServerNumberControllerTest do
   describe "edit server_number" do
     setup [:create_server_number]
 
-    test "renders form for editing chosen server_number", %{conn: conn, server_number: server_number} do
-      conn = get conn, Routes.server_number_path(conn, :edit, server_number)
+    test "renders form for editing chosen server_number", %{
+      conn: conn,
+      server_number: server_number
+    } do
+      conn = get(conn, Routes.server_number_path(conn, :edit, server_number))
       assert html_response(conn, 200) =~ "Edit Server number"
     end
   end
@@ -56,15 +59,21 @@ defmodule RemindMeWeb.ServerNumberControllerTest do
     setup [:create_server_number]
 
     test "redirects when data is valid", %{conn: conn, server_number: server_number} do
-      conn = put conn, Routes.server_number_path(conn, :update, server_number), server_number: @update_attrs
+      conn =
+        put conn, Routes.server_number_path(conn, :update, server_number),
+          server_number: @update_attrs
+
       assert redirected_to(conn) == Routes.server_number_path(conn, :show, server_number)
 
-      conn = get conn, Routes.server_number_path(conn, :show, server_number)
+      conn = get(conn, Routes.server_number_path(conn, :show, server_number))
       assert html_response(conn, 200) =~ "some updated number"
     end
 
     test "renders errors when data is invalid", %{conn: conn, server_number: server_number} do
-      conn = put conn, Routes.server_number_path(conn, :update, server_number), server_number: @invalid_attrs
+      conn =
+        put conn, Routes.server_number_path(conn, :update, server_number),
+          server_number: @invalid_attrs
+
       assert html_response(conn, 200) =~ "Edit Server number"
     end
   end
@@ -73,10 +82,11 @@ defmodule RemindMeWeb.ServerNumberControllerTest do
     setup [:create_server_number]
 
     test "deletes chosen server_number", %{conn: conn, server_number: server_number} do
-      conn = delete conn, Routes.server_number_path(conn, :delete, server_number)
+      conn = delete(conn, Routes.server_number_path(conn, :delete, server_number))
       assert redirected_to(conn) == Routes.server_number_path(conn, :index)
+
       assert_error_sent 404, fn ->
-        get conn, Routes.server_number_path(conn, :show, server_number)
+        get(conn, Routes.server_number_path(conn, :show, server_number))
       end
     end
   end
