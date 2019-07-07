@@ -1,2 +1,38 @@
-<hr>
-<p>Copyright © 2019 Damon Janis. All Rights Reserved.</p>
+<div class="container">
+  <div id="footer-wrapper">
+    <div id="footer-main-block">
+      <a href='<%= Routes.home_path(@conn, :index) %>'>
+        <h5 class="logo">Remind Me</h5>
+      </a>
+      <p id="footer-description">We help you connect to your inbox through texting, so the important To-Do's get done.
+      </p>
+      <div>Copyright © 2019 Remind Me</div>
+    </div>
+
+    <div id="footer-columns">
+      <div class="footer-column">
+        <h5>Product</h5>
+        <dl>
+          <dt>Features</dt>
+          <dt>Pricing</dt>
+        </dl>
+      </div>
+
+      <div class="footer-column">
+        <h5>Company</h5>
+        <dl>
+          <dt>Privacy Policy</dt>
+          <dt>Terms of Use</dt>
+        </dl>
+      </div>
+
+      <div class="footer-column">
+        <h5>Support</h5>
+        <dl>
+          <dt>Contact Us</dt>
+          <dt><%= link("Send us an Email", to: "mailto:support@remindme.live") %></dt>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>
