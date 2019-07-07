@@ -1,0 +1,111 @@
+#desktop-header
+  position: fixed
+  top: 0
+  display: none
+  z-index: 100
+  width: 100%
+  background-color: #ffffff
+  height: $header-height-desktop
+
+#mobile-header
+  position: fixed
+  top: 0
+  z-index: 100
+  width: 100%
+  height: $header-height-mobile
+  display: block
+  border-bottom: 1px solid $color-quaternary
+  background-color: #ffffff
+
+#desktop-menu
+  text-align: right
+
+#mobile-menu
+  display: none
+  position: fixed
+  top: $header-height-mobile
+  z-index: 100
+  flex-direction: column
+  width: 100%
+  background-color: $color-secondary
+
+#mobile-toggle
+  height: 100%
+  width: $header-height-mobile
+  padding: 16px 0 16px 30px
+
+#menu-open
+  height: 100%
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: space-between
+
+#menu-close
+  height: 100%
+  display: none
+  flex-direction: column
+  justify-content: center
+
+.logo
+  margin-bottom: 0px
+
+.menu-open-line
+  width: 100%
+  height: 2px
+  background-color: $color-secondary
+  border-radius: 2px
+
+.menu-close-line-1
+  top: 13px
+  width: 100%
+  height: 2px
+  background-color: $color-secondary
+  border-radius: 2px
+  margin-bottom: -1px
+  transform: rotate(-45deg)
+
+.menu-close-line-2
+  top: 13px
+  width: 100%
+  height: 2px
+  background-color: $color-secondary
+  border-radius: 2px
+  margin-top: -1px
+  transform: rotate(45deg)
+
+.header-wrapper
+  margin: 0 auto
+  max-width: 112rem
+  padding: 0 2rem
+  position: relative
+  width: 100%
+  height: 100%
+  display: flex
+  justify-content: space-between
+  align-items: center
+
+.scroll-shadow
+  box-shadow: 0 7px 20px -5px rgba(0, 0, 0, 0.2)
+
+.desktop-menu-item
+  margin: 0 0 0 40px
+
+.mobile-menu-item
+  color: #ffffff
+  padding: 15px 25px
+
+  &:focus,
+  &:hover
+    color: #ffffff
+    text-decoration: underline
+
+// Larger than tablet
+@media (min-width: 80rem)
+  // Show desktop header when in desktop view
+  #desktop-header
+    display: flex
+    align-items: center
+
+  #mobile-header
+    display: none

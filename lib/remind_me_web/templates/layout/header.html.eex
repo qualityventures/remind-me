@@ -1,0 +1,56 @@
+<div id="mobile-header">
+  <div class="header-wrapper">
+    <a href='<%= Routes.home_path(@conn, :index) %>'>
+      <h4 class="logo">Remind Me</h4>
+    </a>
+    <div id="mobile-toggle">
+      <div id="menu-open">
+        <div class="menu-open-line"></div>
+        <div class="menu-open-line"></div>
+        <div class="menu-open-line"></div>
+      </div>
+      <div id="menu-close">
+        <div class="menu-close-line-1"></div>
+        <div class="menu-close-line-2"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<nav id="mobile-menu">
+  <%= if @current_user do %>
+
+  <%= link "Connections", to: Routes.connection_path(@conn, :index), class: "mobile-menu-item" %>
+  <%= link "Future Reminders", to: Routes.event_path(@conn, :index), class: "mobile-menu-item" %>
+  <%= link "Settings", to: Routes.user_path(@conn, :edit, @current_user.id), class: "mobile-menu-item" %>
+  <%= link "Logout", to: Routes.session_path(@conn, :delete, @current_user), method: :delete, class: "mobile-menu-item" %>
+
+  <% else %>
+
+  <%= link "Sign Up", to: Routes.user_path(@conn, :new), class: "mobile-menu-item" %>
+  <%= link "Log In", to: Routes.session_path(@conn, :new), class: "mobile-menu-item" %>
+
+  <% end %>
+</nav>
+
+<div id="desktop-header">
+  <div class="header-wrapper">
+    <a href='<%= Routes.home_path(@conn, :index) %>'>
+      <h3 class="logo">Remind Me</h3>
+    </a>
+    <nav id="desktop-menu">
+      <%= if @current_user do %>
+
+      <%= link "Connections", to: Routes.connection_path(@conn, :index), class: "desktop-menu-item" %>
+      <%= link "Future Reminders", to: Routes.event_path(@conn, :index), class: "desktop-menu-item" %>
+      <%= link "Settings", to: Routes.user_path(@conn, :edit, @current_user.id), class: "desktop-menu-item" %>
+      <%= link "Logout", to: Routes.session_path(@conn, :delete, @current_user), method: :delete, class: "desktop-menu-item" %>
+
+      <% else %>
+
+      <%= link "Sign Up", to: Routes.user_path(@conn, :new), class: "button desktop-menu-item" %>
+      <%= link "Log In", to: Routes.session_path(@conn, :new), class: "desktop-menu-item" %>
+
+      <% end %>
+    </nav>
+  </div>
+</div>
