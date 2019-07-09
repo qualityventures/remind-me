@@ -74,7 +74,7 @@ defmodule RemindMeWeb.UserControllerTest do
 
     test "updates chosen user when data is valid", %{conn: conn, user: user} do
       conn = put(conn, Routes.user_path(conn, :update, user), user: @update_attrs)
-      assert redirected_to(conn) == Routes.home_path(conn, :index)
+      assert redirected_to(conn) == Routes.page_path(conn, :index)
       updated_user = Accounts.get_user(user.id)
       assert updated_user.email == "william@example.com"
     end
@@ -100,7 +100,7 @@ defmodule RemindMeWeb.UserControllerTest do
     test "cannot delete other user", %{conn: conn, user: user} do
       other = add_user(%{@create_attrs | email: "tony@example.com"})
       conn = delete(conn, Routes.user_path(conn, :delete, other))
-      assert redirected_to(conn) == Routes.home_path(conn, :index)
+      assert redirected_to(conn) == Routes.page_path(conn, :index)
       assert Accounts.get_user(other.id)
     end
   end

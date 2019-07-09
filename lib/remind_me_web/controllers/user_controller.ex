@@ -73,7 +73,7 @@ defmodule RemindMeWeb.UserController do
 
     case Accounts.update_user(user, user_params) do
       {:ok, _user} ->
-        success(conn, "Settings updated successfully", Routes.home_path(conn, :index))
+        success(conn, "Settings updated successfully", Routes.page_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", user: user, changeset: changeset)

@@ -22,14 +22,14 @@ defmodule RemindMeWeb.PasswordResetControllerTest do
       valid_attrs = %{email: "gladys@example.com"}
       conn = post(conn, Routes.password_reset_path(conn, :create), password_reset: valid_attrs)
       assert get_flash(conn, :info) =~ "your inbox for instructions"
-      assert redirected_to(conn) == Routes.home_path(conn, :index)
+      assert redirected_to(conn) == Routes.page_path(conn, :index)
     end
 
     test "create function fails for no user", %{conn: conn} do
       invalid_attrs = %{email: "prettylady@example.com"}
       conn = post(conn, Routes.password_reset_path(conn, :create), password_reset: invalid_attrs)
       assert get_flash(conn, :info) =~ "your inbox for instructions"
-      assert redirected_to(conn) == Routes.home_path(conn, :index)
+      assert redirected_to(conn) == Routes.page_path(conn, :index)
     end
   end
 
@@ -48,7 +48,7 @@ defmodule RemindMeWeb.PasswordResetControllerTest do
           session: %{email: "gladys@example.com", password: "^hEsdg*F899"}
         )
 
-      assert redirected_to(conn) == Routes.home_path(conn, :index)
+      assert redirected_to(conn) == Routes.page_path(conn, :index)
     end
 
     test "reset password fails for incorrect key", %{conn: conn} do

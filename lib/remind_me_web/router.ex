@@ -20,8 +20,10 @@ defmodule RemindMeWeb.Router do
   scope "/", RemindMeWeb do
     pipe_through(:browser)
 
-    # Home page and dashboard
-    get("/", HomeController, :index)
+    # Pages
+    get("/", PageController, :index)
+
+    # TODO figure out what to do with dashboard
     get("/dashboard", HomeController, :dashboard)
 
     # Core CRUD operations

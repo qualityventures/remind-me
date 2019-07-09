@@ -1,6 +1,6 @@
 <div id="mobile-header">
   <div class="header-wrapper">
-    <a href='<%= Routes.home_path(@conn, :index) %>'>
+    <a href='<%= Routes.page_path(@conn, :index) %>'>
       <h4 class="logo">Remind Me</h4>
     </a>
     <div id="mobile-toggle">
@@ -34,7 +34,7 @@
 
 <div id="desktop-header">
   <div class="header-wrapper">
-    <a href='<%= Routes.home_path(@conn, :index) %>'>
+    <a href='<%= Routes.page_path(@conn, :index) %>'>
       <h3 class="logo">Remind Me</h3>
     </a>
     <nav id="desktop-menu">

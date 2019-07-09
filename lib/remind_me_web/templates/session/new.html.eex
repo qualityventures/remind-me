@@ -29,4 +29,4 @@
   </div>
 <% end %>
 
-<span><%= link "Back", to: Routes.home_path(@conn, :index) %></span>
+<span><%= link "Back", to: Routes.page_path(@conn, :index) %></span>

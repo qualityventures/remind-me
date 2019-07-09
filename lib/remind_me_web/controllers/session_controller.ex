@@ -20,7 +20,7 @@ defmodule RemindMeWeb.SessionController do
         conn
         |> add_session(user, params)
         |> put_flash(:info, "User successfully logged in.")
-        |> redirect(to: get_session(conn, :request_path) || Routes.home_path(conn, :index))
+        |> redirect(to: get_session(conn, :request_path) || Routes.page_path(conn, :index))
 
       {:error, message} ->
         conn
@@ -40,12 +40,12 @@ defmodule RemindMeWeb.SessionController do
         |> delete_session(:phauxth_session_id)
         |> Remember.delete_rem_cookie()
         |> put_flash(:info, "User successfully logged out.")
-        |> redirect(to: Routes.home_path(conn, :index))
+        |> redirect(to: Routes.page_path(conn, :index))
 
       _ ->
         conn
         |> put_flash(:error, "Unauthorized")
-        |> redirect(to: Routes.home_path(conn, :index))
+        |> redirect(to: Routes.page_path(conn, :index))
     end
   end
 

@@ -41,7 +41,7 @@ defmodule RemindMeWeb.SessionControllerTest do
   describe "create session" do
     test "login succeeds", %{conn: conn} do
       conn = post(conn, Routes.session_path(conn, :create), session: @create_attrs)
-      assert redirected_to(conn) == Routes.home_path(conn, :index)
+      assert redirected_to(conn) == Routes.page_path(conn, :index)
     end
 
     test "login fails for user that is not yet confirmed", %{conn: conn} do
@@ -80,7 +80,7 @@ defmodule RemindMeWeb.SessionControllerTest do
       conn = conn |> add_session(user) |> send_resp(:ok, "/")
       session_id = get_session(conn, :phauxth_session_id)
       conn = delete(conn, Routes.session_path(conn, :delete, session_id))
-      assert redirected_to(conn) == Routes.home_path(conn, :index)
+      assert redirected_to(conn) == Routes.page_path(conn, :index)
       conn = get(conn, Routes.user_path(conn, :index))
       assert redirected_to(conn) == Routes.session_path(conn, :new)
     end

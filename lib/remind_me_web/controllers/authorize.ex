@@ -44,7 +44,7 @@ defmodule RemindMeWeb.Authorize do
         %Plug.Conn{params: %{"id" => id}, assigns: %{current_user: current_user}} = conn,
         _opts
       ) do
-    (id == to_string(current_user.id) and conn) || error(conn, "", Routes.home_path(conn, :index))
+    (id == to_string(current_user.id) and conn) || error(conn, "", Routes.page_path(conn, :index))
   end
 
   def owner_check(%Plug.Conn{assigns: %{current_user: nil}} = conn, _opts) do
@@ -52,7 +52,7 @@ defmodule RemindMeWeb.Authorize do
   end
 
   def owner_check(%Plug.Conn{assigns: %{current_user: current_user}} = conn, user) do
-    user == current_user || error(conn, "", Routes.home_path(conn, :index))
+    user == current_user || error(conn, "", Routes.page_path(conn, :index))
   end
 
   # Plug to only allow admins access to the resource

@@ -1,7 +1,7 @@
 <div class="container">
   <div id="footer-wrapper">
     <div id="footer-main-block">
-      <a href='<%= Routes.home_path(@conn, :index) %>'>
+      <a href='<%= Routes.page_path(@conn, :index) %>'>
         <h5 class="logo">Remind Me</h5>
       </a>
       <p id="footer-description">We help you connect to your inbox through texting, so the important To-Do's get done.
