@@ -1,9 +1,17 @@
 defmodule RemindMeWeb.MessageReceiveController do
   use RemindMeWeb, :controller
 
+  require Logger
+
   alias RemindMe.{Repo, Connections, Messages, Emails}
   alias RemindMe.Messages.Message
   alias RemindMe.Emails.Mailer
+
+  @doc "Temp to gather true params from Telnyx"
+  def process(conn, params) do
+    Logger.info("Conn: #{inspect(conn)}")
+    Logger.info("Params: #{inspect(params)}")
+  end
 
   # Process if it's a multi-part message
   def process(conn, %{"concat" => "true"} = params) do
