@@ -43,7 +43,7 @@ defmodule RemindMeWeb.Router do
   scope "/api", RemindMeWeb do
     pipe_through(:api)
 
-    get("/message-receive", MessageReceiveController, :process)
+    post("/message-receive", MessageReceiveController, :process)
     post("/sendgrid-events", SendgridEventController, :process)
     post("/inbound-parse", InboundParseController, :new)
   end
