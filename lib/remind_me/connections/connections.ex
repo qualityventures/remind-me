@@ -223,9 +223,12 @@ defmodule RemindMe.Connections do
   end
 
   def format_phone(phone) do
-    trimmed = String.trim_leading(phone, "1")
-    bare = Regex.replace(~r{\D}, trimmed, "")
-    {first, mid} = String.split_at(bare, 3)
+    stripped =
+      phone
+      |> String.replace(~r{\D}, "")
+      |> String.trim_leading("1")
+
+    {first, mid} = String.split_at(stripped, 3)
     {mid, last} = String.split_at(mid, 3)
 
     "#{first}-#{mid}-#{last}"

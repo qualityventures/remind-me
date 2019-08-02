@@ -25,7 +25,7 @@ defmodule RemindMeWeb.UserController do
   end
 
   def create(conn, %{"user" => %{"email" => email, "phone" => phone} = user_params}) do
-    %{user_params | "email" => String.downcase(email), "phone" => Accounts.format_phone(phone)}
+    %{user_params | "email" => String.downcase(email), "phone" => Connections.format_phone(phone)}
     key = Token.sign(%{"email" => user_params["email"]})
 
     case Accounts.create_user(user_params) do

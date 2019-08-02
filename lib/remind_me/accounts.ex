@@ -5,7 +5,7 @@ defmodule RemindMe.Accounts do
 
   import Ecto.Query, warn: false
 
-  alias RemindMe.{Accounts.User, Repo, Sessions, Sessions.Session}
+  alias RemindMe.{Accounts.User, Repo, Sessions, Sessions.Session, Connections}
 
   def list_users, do: Repo.all(User)
 
@@ -25,7 +25,7 @@ defmodule RemindMe.Accounts do
   def get_by(%{"user_id" => user_id}), do: Repo.get(User, user_id)
 
   def get_by_phone(phone) do
-    phone = format_phone(phone)
+    phone = Connections.format_phone(phone)
     Repo.get_by(User, phone: phone)
   end
 
@@ -69,14 +69,5 @@ defmodule RemindMe.Accounts do
 
   def change_user(%User{} = user) do
     User.changeset(user, %{})
-  end
-
-  def format_phone(phone) do
-    trimmed = String.trim_leading(phone, "1")
-    bare = Regex.replace(~r{\D}, trimmed, "")
-    {first, mid} = String.split_at(bare, 3)
-    {mid, last} = String.split_at(mid, 3)
-
-    "#{first}-#{mid}-#{last}"
   end
 end

@@ -3,87 +3,15 @@ defmodule RemindMeWeb.MessageReceiveController do
 
   require Logger
 
-  alias RemindMe.{Repo, Connections, Messages, Emails}
+  alias RemindMe.{Repo, Connections, Emails}
   alias RemindMe.Messages.Message
   alias RemindMe.Emails.Mailer
 
-  @doc "Temp to gather true params from Telnyx"
-  def process(conn, params) do
-    Logger.info("Conn: #{inspect(conn)}")
-    Logger.info("Params: #{inspect(params)}")
-  end
-
-  # Process if it's a multi-part message
-  def process(conn, %{"concat" => "true"} = params) do
-    body = params["text"]
-    from = params["msisdn"]
-    message_sid = params["messageId"]
-    to = params["to"]
-    ref = params["concat-ref"]
-    total = params["concat-total"]
-    part = params["concat-part"]
-
-    # Save partial message in database
-    Messages.create_message_concat(%{
-      body: body,
-      part: part,
-      ref: ref,
-      total: total,
-      to: to
-    })
-
-    messages = Messages.get_concat_by_ref(ref, to)
-
-    if length(messages) == String.to_integer(total) do
-      full_body =
-        messages
-        |> Enum.sort_by(fn m -> m.part end)
-        |> Enum.map(fn m -> m.body end)
-        |> Enum.join()
-
-      for message <- messages do
-        Messages.delete_message_concat(message)
-      end
-
-      connections = Connections.find_connections_by_phone(from)
-
-      connection =
-        Enum.find(connections, fn c -> c.server_number.number == Connections.format_phone(to) end)
-
-      if !is_nil(connection) do
-        user = connection.user
-        # Create a subject line from the first 7 words in the body.
-        subject =
-          full_body
-          |> String.split()
-          |> Enum.take(7)
-          |> Enum.join(" ")
-
-        # Save the received message into the database.
-        Repo.insert(%Message{
-          body: full_body,
-          from: from,
-          message_sid: message_sid,
-          to: to,
-          user_id: user.id
-        })
-
-        # Send the email.
-        subject
-        |> Emails.email_from_message(full_body, connection.destination.email)
-        |> Mailer.deliver_now()
-      end
-    end
-
-    # Return 200 with no body
-    text(conn, "")
-  end
-
   # Process if it's just a single message
   def process(conn, params) do
-    body = params["text"]
-    from = params["msisdn"]
-    message_sid = params["messageId"]
+    body = params["body"]
+    from = params["from"]
+    sms_id = params["sms_id"]
     to = params["to"]
 
     connections = Connections.find_connections_by_phone(from)
@@ -109,7 +37,7 @@ defmodule RemindMeWeb.MessageReceiveController do
         Repo.insert(%Message{
           body: body,
           from: from,
-          message_sid: message_sid,
+          message_sid: sms_id,
           to: to,
           user_id: user.id
         })
